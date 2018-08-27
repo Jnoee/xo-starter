@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>xo-starter</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>com.github.jnoee</groupId>
+		<artifactId>xo-dependencies</artifactId>
+		<version>1.0.4-SNAPSHOT</version>
+	</parent>
+
+	<scm>
+		<url>http://git.kaow.cn:88/su/xo-starter</url>
+		<connection>scm:git:http://git.kaow.cn:88/su/xo-starter.git</connection>
+		<developerConnection>scm:git:http://git.kaow.cn:88/su/xo-starter.git</developerConnection>
+	</scm>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>xo-starter-base</module>
+		<module>xo-starter-cache</module>
+		<module>xo-starter-cache-redis</module>
+		<module>xo-starter-cache-redisson</module>
+		<module>xo-starter-web</module>
+		<module>xo-starter-privileg</module>
+		<module>xo-starter-shiro</module>
+		<module>xo-starter-fastdfs</module>
+		<module>xo-starter-xss</module>
+		<module>xo-starter-jpa</module>
+		<module>xo-starter-jpa-ctut</module>
+		<module>xo-starter-jpa-bizlog</module>
+		<module>xo-starter-pay</module>
+		<module>xo-starter-excel</module>
+		<module>xo-starter-mvc</module>
+		<module>xo-starter-kaptcha</module>
+		<module>xo-starter-dwz</module>
+	</modules>
+</project>
