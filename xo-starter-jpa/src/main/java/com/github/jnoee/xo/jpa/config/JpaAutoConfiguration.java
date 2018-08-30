@@ -15,14 +15,14 @@ import com.github.jnoee.xo.jpa.entity.UuidEntityToString;
 
 @Configuration
 @AutoConfigureAfter(value = JpaRepositoriesAutoConfiguration.class)
-@EntityScan({"com.cntest.su.jpa.converter", "com.cntest.su.jpa.usertype"})
+@EntityScan({"com.github.jnoee.xo.jpa.converter", "com.github.jnoee.xo.jpa.usertype"})
 public class JpaAutoConfiguration implements WebMvcConfigurer {
   /**
    * 当开启了查询缓存时，构建查询缓存配置。
    * 
    * @return 返回查询缓存配置。
    */
-  @Bean("com.cntest.su.jpa.config.CacheSettings")
+  @Bean("com.github.jnoee.xo.jpa.config.CacheSettings")
   @ConditionalOnProperty(value = "spring.jpa.properties.hibernate.cache.use_query_cache",
       havingValue = "true", matchIfMissing = false)
   CacheSettings cacheSettings() {

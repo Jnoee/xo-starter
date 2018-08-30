@@ -13,7 +13,7 @@ import com.github.jnoee.xo.jpa.dao.DaoScan;
 
 @Configuration
 @AutoConfigureAfter(value = JpaAutoConfiguration.class)
-@EntityScan("com.cntest.su.jpa.bizlog.entity")
+@EntityScan("com.github.jnoee.xo.jpa.bizlog.entity")
 @DaoScan
 public class BizLogAutoConfiguration {
   @Bean

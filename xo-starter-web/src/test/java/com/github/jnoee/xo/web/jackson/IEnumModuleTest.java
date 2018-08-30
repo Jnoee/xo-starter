@@ -1,4 +1,4 @@
-package com.cntest.su.web.jackson;
+package com.github.jnoee.xo.web.jackson;
 
 import org.junit.Assert;
 import org.junit.Test;

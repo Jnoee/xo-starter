@@ -22,7 +22,7 @@ public class DwzAutoConfiguration implements WebMvcConfigurer {
     return new AuthCounter();
   }
 
-  @Bean("com.cntest.su.dwz.config.FreeMarkerSettings")
+  @Bean("com.github.jnoee.xo.dwz.config.FreeMarkerSettings")
   public FreeMarkerSettings freemarkerSettings() {
     return new FreeMarkerSettings();
   }

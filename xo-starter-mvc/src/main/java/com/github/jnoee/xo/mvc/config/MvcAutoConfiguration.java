@@ -27,7 +27,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
     return configurer;
   }
 
-  @Bean("com.cntest.su.mvc.config.FreeMarkerSettings")
+  @Bean("com.github.jnoee.xo.mvc.config.FreeMarkerSettings")
   public FreeMarkerSettings freemarkerSettings() {
     return new FreeMarkerSettings();
   }

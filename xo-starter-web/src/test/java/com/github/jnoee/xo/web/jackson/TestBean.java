@@ -1,4 +1,4 @@
-package com.cntest.su.web.jackson;
+package com.github.jnoee.xo.web.jackson;
 
 public class TestBean {
   private TestEnum num = TestEnum.ONE;
