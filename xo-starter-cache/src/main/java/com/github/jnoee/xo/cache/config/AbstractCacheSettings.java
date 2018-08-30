@@ -1,4 +1,4 @@
-package com.github.jnoee.xo.cache;
+package com.github.jnoee.xo.cache.config;
 
 import java.util.ArrayList;
 import java.util.List;

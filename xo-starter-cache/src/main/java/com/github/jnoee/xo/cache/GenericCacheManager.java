@@ -1,4 +1,4 @@
-package com.github.jnoee.xo.cache.redisson;
+package com.github.jnoee.xo.cache;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,17 +11,17 @@ import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.github.jnoee.xo.cache.AbstractCacheSettings;
-import com.github.jnoee.xo.cache.CacheRegion;
+import com.github.jnoee.xo.cache.config.AbstractCacheSettings;
+import com.github.jnoee.xo.cache.config.CacheRegion;
 
 /**
  * 自定义RedissonCacheManager。从AbstractCacheSettings组件实例中获取缓存配置。
  */
-public class GenericRedissonCacheManager extends RedissonSpringCacheManager
+public class GenericCacheManager extends RedissonSpringCacheManager
     implements ApplicationContextAware {
   private List<AbstractCacheSettings> settings = new ArrayList<>();
 
-  public GenericRedissonCacheManager(RedissonClient redisson) {
+  public GenericCacheManager(RedissonClient redisson) {
     super(redisson);
   }
 

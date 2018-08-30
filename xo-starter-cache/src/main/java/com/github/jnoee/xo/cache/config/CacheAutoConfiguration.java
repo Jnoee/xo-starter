@@ -1,4 +1,4 @@
-package com.github.jnoee.xo.cache.redisson.config;
+package com.github.jnoee.xo.cache.config;
 
 import java.io.IOException;
 
@@ -18,18 +18,18 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
 import org.springframework.session.web.http.HttpSessionIdResolver;
 
-import com.github.jnoee.xo.cache.redisson.GenericRedissonCacheManager;
+import com.github.jnoee.xo.cache.GenericCacheManager;
 
 @Configuration
 @EnableCaching
 @EnableRedissonHttpSession
-@EnableConfigurationProperties(RedissonCacheProperties.class)
-public class RedissonCacheAutoConfiguration {
+@EnableConfigurationProperties(CacheProperties.class)
+public class CacheAutoConfiguration {
   @Autowired
-  private RedissonCacheProperties cacheProperties;
+  private CacheProperties cacheProperties;
 
   @Bean
-  @ConditionalOnProperty(name = "xo.cache.redisson.x-auth-token", havingValue = "true",
+  @ConditionalOnProperty(name = "xo.cache.x-auth-token", havingValue = "true",
       matchIfMissing = true)
   HttpSessionIdResolver httpSessionIdResolver() {
     return HeaderHttpSessionIdResolver.xAuthToken();
@@ -51,7 +51,7 @@ public class RedissonCacheAutoConfiguration {
 
   @Bean
   CacheManager cacheManager(RedissonClient redissonClient) {
-    return new GenericRedissonCacheManager(redissonClient);
+    return new GenericCacheManager(redissonClient);
   }
 
   private Boolean isJsonFile(String fileName) {
