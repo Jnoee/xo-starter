@@ -1,4 +1,4 @@
-package com.github.jnoee.su.dwz.result;
+package com.github.jnoee.xo.dwz.result;
 
 /**
  * DWZ结果状态常量。

@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class MessageSource extends ReloadableResourceBundleMessageSource {
-  private static final String MESSAGE_DIR = "classpath*:/META-INF/su/";
+  private static final String MESSAGE_DIR = "classpath*:/META-INF/xo/";
   private static final String MESSAGE_PATH_PREFIX = MESSAGE_DIR + "*messages";
   private static final String XML_MESSAGE_PATH = MESSAGE_PATH_PREFIX + ".xml";
   private static final String YML_MESSAGE_PATH = MESSAGE_PATH_PREFIX + ".yml";

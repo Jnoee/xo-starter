@@ -1,10 +1,17 @@
 package com.github.jnoee.xo.excel.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.github.jnoee.xo.utils.DateUtils;
+
+import lombok.Data;
 
 /**
  * 职员。
  */
+@Data
 public class Employee {
   /** 姓名 */
   private String name;
@@ -16,54 +23,24 @@ public class Employee {
   private Double payment = 0d;
   /** 奖金比例 */
   private Double bonus = 0d;
-  /** 上级 */
-  private Employee superior;
 
-  public String getName() {
-    return name;
+  public static Employee single() {
+    return multi(1).get(0);
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  public static List<Employee> multi(Integer count) {
+    List<Employee> employees = new ArrayList<>();
 
-  public Integer getAge() {
-    return age;
-  }
+    for (int i = 0; i < count; i++) {
+      Employee employee = new Employee();
+      employee.setName("职员" + i);
+      employee.setAge(30 + i);
+      employee.setBirthDate(DateUtils.parse(1983 - i + "-01-01"));
+      employee.setPayment(20000.00 + 1000 * i);
+      employee.setBonus(0.25 - i * 0.01);
+      employees.add(employee);
+    }
 
-  public void setAge(Integer age) {
-    this.age = age;
-  }
-
-  public Date getBirthDate() {
-    return birthDate;
-  }
-
-  public void setBirthDate(Date birthDate) {
-    this.birthDate = birthDate;
-  }
-
-  public Double getPayment() {
-    return payment;
-  }
-
-  public void setPayment(Double payment) {
-    this.payment = payment;
-  }
-
-  public Double getBonus() {
-    return bonus;
-  }
-
-  public void setBonus(Double bonus) {
-    this.bonus = bonus;
-  }
-
-  public Employee getSuperior() {
-    return superior;
-  }
-
-  public void setSuperior(Employee superior) {
-    this.superior = superior;
+    return employees;
   }
 }

@@ -8,7 +8,7 @@ import lombok.Data;
  * 缓存配置。
  */
 @Data
-@ConfigurationProperties("su.cache.redisson")
+@ConfigurationProperties("xo.cache.redisson")
 public class RedissonCacheProperties {
   /** 是否打开x-auth-token */
   private Boolean xAuthToken = true;

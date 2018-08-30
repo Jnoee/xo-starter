@@ -8,7 +8,7 @@ import lombok.Data;
  * Redis缓存配置。
  */
 @Data
-@ConfigurationProperties("su.cache.redis")
+@ConfigurationProperties("xo.cache.redis")
 public class RedisCacheProperties {
   /** 是否打开x-auth-token */
   private Boolean xAuthToken = true;

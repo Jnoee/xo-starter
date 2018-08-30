@@ -50,7 +50,6 @@ public class ExcelView extends AbstractXlsxView {
       HttpServletRequest request, HttpServletResponse response) throws Exception {
     String excelName = fileName + ".xlsx";
     response.setHeader("content-disposition", "attachment;filename=" + HttpUtils.encode(excelName));
-    response.setContentType("application/ms-excel; charset=" + Encoding.UTF8);
     response.setCharacterEncoding(Encoding.UTF8);
   }
 }

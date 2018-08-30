@@ -3,38 +3,40 @@ package com.github.jnoee.xo.excel.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
+
 /**
  * 部门。
  */
+@Data
 public class Department {
   /** 名称 */
   private String name;
   /** 主管 */
   private Employee chief;
   /** 关联职员列表 */
-  private List<Employee> employees = new ArrayList<Employee>();
+  private List<Employee> employees = new ArrayList<>();
 
-  public String getName() {
-    return name;
+  public static Department single() {
+    return multi(1).get(0);
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  public static List<Department> multi(Integer count) {
+    List<Department> departments = new ArrayList<>();
 
-  public Employee getChief() {
-    return chief;
-  }
+    for (int i = 0; i < count; i++) {
+      Department department = new Department();
+      department.setName("部门" + i);
 
-  public void setChief(Employee chief) {
-    this.chief = chief;
-  }
+      Employee chief = Employee.single();
+      chief.setName("部门主管" + i);
 
-  public List<Employee> getEmployees() {
-    return employees;
-  }
+      department.setChief(chief);
+      department.setEmployees(Employee.multi(10));
 
-  public void setEmployees(List<Employee> employees) {
-    this.employees = employees;
+      departments.add(department);
+    }
+
+    return departments;
   }
 }

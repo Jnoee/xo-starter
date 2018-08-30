@@ -29,7 +29,7 @@ public class RedissonCacheAutoConfiguration {
   private RedissonCacheProperties cacheProperties;
 
   @Bean
-  @ConditionalOnProperty(name = "su.cache.redisson.x-auth-token", havingValue = "true",
+  @ConditionalOnProperty(name = "xo.cache.redisson.x-auth-token", havingValue = "true",
       matchIfMissing = true)
   HttpSessionIdResolver httpSessionIdResolver() {
     return HeaderHttpSessionIdResolver.xAuthToken();

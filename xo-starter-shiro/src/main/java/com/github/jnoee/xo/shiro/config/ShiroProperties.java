@@ -9,7 +9,7 @@ import lombok.Data;
  * Shiro配置。
  */
 @Data
-@ConfigurationProperties("su.shiro")
+@ConfigurationProperties("xo.shiro")
 public class ShiroProperties {
   /** 加密算法 */
   private String algorithmName = Sha256Hash.ALGORITHM_NAME;

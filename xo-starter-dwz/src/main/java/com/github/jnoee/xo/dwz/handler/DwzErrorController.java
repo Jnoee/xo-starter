@@ -1,4 +1,4 @@
-package com.github.jnoee.su.dwz.handler;
+package com.github.jnoee.xo.dwz.handler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.jnoee.su.dwz.result.DwzResultBuild;
+import com.github.jnoee.xo.dwz.result.DwzResultBuild;
 import com.github.jnoee.xo.exception.BizException;
 import com.github.jnoee.xo.message.MessageSource;
 import com.github.jnoee.xo.utils.StringUtils;

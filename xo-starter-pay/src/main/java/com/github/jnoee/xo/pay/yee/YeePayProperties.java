@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ConfigurationProperties("su.pay.yee")
+@ConfigurationProperties("xo.pay.yee")
 public class YeePayProperties {
   /** node请求地址 */
   private String nodeUrl = "https://www.yeepay.com/app-merchant-proxy/node";

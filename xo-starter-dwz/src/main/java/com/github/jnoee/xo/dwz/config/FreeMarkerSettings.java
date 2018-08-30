@@ -1,4 +1,4 @@
-package com.github.jnoee.su.dwz.config;
+package com.github.jnoee.xo.dwz.config;
 
 import org.apache.shiro.SecurityUtils;
 
@@ -12,12 +12,12 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
    * 构造方法。
    */
   public FreeMarkerSettings() {
-    addTemplatePath("classpath:/META-INF/su/dwz/template/");
-    addTemplatePath("classpath:/META-INF/su/dwz/macro/");
+    addTemplatePath("classpath:/META-INF/xo/dwz/template/");
+    addTemplatePath("classpath:/META-INF/xo/dwz/macro/");
     addAutoImport("dwz", "dwz.ftl");
 
     addStaticClass(SecurityUtils.class);
-    addTld("/META-INF/su/tld/shiro.tld");
+    addTld("/META-INF/xo/tld/shiro.tld");
     addAutoInclude("shiro-include.ftl");
     addAutoImport("sec", "sec.ftl");
   }

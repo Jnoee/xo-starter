@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.github.jnoee.xo.excel.Excel;
+import com.github.jnoee.xo.excel.model.Department;
 
 public class BasicSample extends AbstractSample {
   @Test
   public void test() throws Exception {
     Map<String, Object> model = new HashMap<String, Object>();
-    model.put("department", genDepartments(1).get(0));
+    model.put("department", Department.single());
 
     Excel excel = excelFactory.create("basic", model);
     excel.writeTo(new FileOutputStream(outputDir + "/basic_export.xlsx"));

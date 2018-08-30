@@ -10,7 +10,7 @@ import com.github.jnoee.xo.utils.DateUtils;
 /**
  * FreeMarker配置属性。
  */
-@ConfigurationProperties(prefix = "su.freemarker")
+@ConfigurationProperties(prefix = "xo.freemarker")
 public class FreeMarkerProperties {
   private Integer templateUpdateDelay = 5;
   private String urlEscapingCharset = Encoding.UTF8;

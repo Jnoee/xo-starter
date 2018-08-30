@@ -1,4 +1,4 @@
-package com.github.jnoee.su.dwz.login;
+package com.github.jnoee.xo.dwz.login;
 
 import javax.servlet.http.HttpServletRequest;
 

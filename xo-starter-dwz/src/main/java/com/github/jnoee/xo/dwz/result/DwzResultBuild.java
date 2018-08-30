@@ -1,4 +1,4 @@
-package com.github.jnoee.su.dwz.result;
+package com.github.jnoee.xo.dwz.result;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;

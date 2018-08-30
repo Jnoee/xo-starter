@@ -1,4 +1,4 @@
-package com.github.jnoee.su.dwz.result;
+package com.github.jnoee.xo.dwz.result;
 
 import java.util.ArrayList;
 import java.util.List;

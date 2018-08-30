@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;
 
 @Data
-@ConfigurationProperties("su.kaptcha")
+@ConfigurationProperties("xo.kaptcha")
 public class KaptchaProperties {
   /** 是否带边框 */
   private String border = "yes";

@@ -1,4 +1,4 @@
-package com.github.jnoee.su.dwz.config;
+package com.github.jnoee.xo.dwz.config;
 
 
 import org.springframework.context.annotation.Bean;
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.github.jnoee.su.dwz.handler.DwzErrorController;
-import com.github.jnoee.su.dwz.login.AuthCounter;
+import com.github.jnoee.xo.dwz.handler.DwzErrorController;
+import com.github.jnoee.xo.dwz.login.AuthCounter;
 
 /**
  * 组件配置。
@@ -35,6 +35,6 @@ public class DwzAutoConfiguration implements WebMvcConfigurer {
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/dwz/**")
-        .addResourceLocations("classpath:/META-INF/su/dwz/static/");
+        .addResourceLocations("classpath:/META-INF/xo/dwz/static/");
   }
 }

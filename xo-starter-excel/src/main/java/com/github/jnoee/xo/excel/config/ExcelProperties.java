@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ConfigurationProperties("su.excel")
+@ConfigurationProperties("xo.excel")
 public class ExcelProperties {
   /** 模版路径 */
-  private String templateDir = "classpath*:/META-INF/su/report";
+  private String templateDir = "classpath*:/META-INF/xo/excel";
 }

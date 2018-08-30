@@ -39,7 +39,7 @@ public class RedisCacheAutoConfiguration extends CachingConfigurerSupport {
   private RedisCacheProperties cacheProperties;
 
   @Bean
-  @ConditionalOnProperty(name = "su.cache.redis.x-auth-token", havingValue = "true",
+  @ConditionalOnProperty(name = "xo.cache.redis.x-auth-token", havingValue = "true",
       matchIfMissing = true)
   public HttpSessionIdResolver httpSessionIdResolver() {
     return HeaderHttpSessionIdResolver.xAuthToken();

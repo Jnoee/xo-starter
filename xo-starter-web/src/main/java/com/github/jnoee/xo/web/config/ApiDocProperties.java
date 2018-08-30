@@ -8,7 +8,7 @@ import lombok.Data;
  * API文档配置属性。
  */
 @Data
-@ConfigurationProperties(prefix = "su.api.doc")
+@ConfigurationProperties(prefix = "xo.api.doc")
 public class ApiDocProperties {
   private String title;
   private String description;

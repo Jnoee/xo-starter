@@ -17,7 +17,7 @@ import com.github.jnoee.xo.utils.StringUtils;
  */
 public class PrivilegManager {
   private final Logger log = LoggerFactory.getLogger(getClass());
-  private static final String PRIVILEGS_DIR = "classpath*:/META-INF/su/";
+  private static final String PRIVILEGS_DIR = "classpath*:/META-INF/xo/";
   private static final String PRIVILEGS_PATH = PRIVILEGS_DIR + "*privilegs.xml";
   private Privilegs privilegs = new Privilegs();
 

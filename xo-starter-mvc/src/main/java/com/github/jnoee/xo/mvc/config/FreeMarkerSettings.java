@@ -12,8 +12,8 @@ public class FreeMarkerSettings extends AbstractFreeMarkerSettings {
    * 构造方法。
    */
   public FreeMarkerSettings() {
-    addTemplatePath("classpath:/META-INF/su/mvc/macro/");
-    addTemplatePath("classpath:/META-INF/su/mvc/template/");
+    addTemplatePath("classpath:/META-INF/xo/mvc/macro/");
+    addTemplatePath("classpath:/META-INF/xo/mvc/template/");
     addAutoImport("s", "mvc.ftl");
     addStaticClass(StringUtils.class, DateUtils.class);
   }

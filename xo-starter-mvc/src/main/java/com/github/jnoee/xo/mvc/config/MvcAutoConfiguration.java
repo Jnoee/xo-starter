@@ -40,7 +40,7 @@ public class MvcAutoConfiguration implements WebMvcConfigurer {
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/mvc/**")
-        .addResourceLocations("classpath:/META-INF/su/mvc/static/");
+        .addResourceLocations("classpath:/META-INF/xo/mvc/static/");
   }
 
   @Override
