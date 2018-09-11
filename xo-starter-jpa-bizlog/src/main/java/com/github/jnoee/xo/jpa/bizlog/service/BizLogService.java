@@ -74,7 +74,7 @@ public class BizLogService {
   public Page<BizLog> searchLog(PageQuery query) {
     Criteria<BizLog> criteria = bizLogDao.createCriteria();
     criteria.desc("operateTime");
-    return bizLogDao.findPage(criteria, query, "creator", "message");
+    return bizLogDao.findPage(criteria, query, "operator", "message");
   }
 
   /**

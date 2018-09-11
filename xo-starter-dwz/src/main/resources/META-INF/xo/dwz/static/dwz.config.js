@@ -1,6 +1,6 @@
 /** 覆盖DWZ的翻页参数设置 */
 $.extend(DWZ.pageInfo, {
-	pageNum: "pageNo",
+	pageNum: "pageNum",
 	numPerPage: "pageSize",
 	orderField: "orderBy",
 	orderDirection: "s"
