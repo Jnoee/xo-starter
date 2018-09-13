@@ -14,11 +14,14 @@ import org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationForm
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jnoee.xo.utils.DateUtils;
 import com.github.jnoee.xo.web.converter.IEnumToString;
 import com.github.jnoee.xo.web.converter.StringToIEnum;
+import com.github.jnoee.xo.web.handler.ErrorView;
 import com.github.jnoee.xo.web.handler.WebErrorAttributes;
 import com.github.jnoee.xo.web.handler.WebErrorController;
 import com.github.jnoee.xo.web.jackson.IEnumModule;
@@ -62,6 +65,18 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
   @Bean
   public WebErrorController webErrorController() {
     return new WebErrorController();
+  }
+
+  /**
+   * 配置异常视图。
+   * 
+   * @param objectMapper ObjectMapper
+   * @param errorAttributes ErrorAttributes
+   * @return 返回异常视图。
+   */
+  @Bean(name = "error")
+  public View errorView(ObjectMapper objectMapper, ErrorAttributes errorAttributes) {
+    return new ErrorView(objectMapper, errorAttributes);
   }
 
   /**
