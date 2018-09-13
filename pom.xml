@@ -71,5 +71,6 @@
 		<module>xo-starter-mvc</module>
 		<module>xo-starter-kaptcha</module>
 		<module>xo-starter-dwz</module>
+		<module>xo-starter-word</module>
 	</modules>
 </project>

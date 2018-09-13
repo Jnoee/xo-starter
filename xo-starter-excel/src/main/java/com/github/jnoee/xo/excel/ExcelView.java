@@ -25,6 +25,7 @@ public class ExcelView extends AbstractXlsxView {
   private Excel excel;
 
   public ExcelView(String fileName, Excel excel) {
+    super();
     this.fileName = fileName;
     this.excel = excel;
   }
