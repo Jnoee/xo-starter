@@ -3,6 +3,7 @@ package com.github.jnoee.xo.utils;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -49,11 +50,37 @@ public class HttpClientUtils {
    * @return 返回响应消息字符串。
    */
   public static String doGet(String url, Map<String, String> params) {
+    return doGet(url, params, Encoding.UTF8);
+  }
+
+  /**
+   * 调用HttpGet请求。
+   * 
+   * @param url URL地址
+   * @param params 请求参数
+   * @param encoding 编码格式
+   * @return 返回响应消息字符串。
+   */
+  public static String doGet(String url, Map<String, String> params, String encoding) {
+    return doGet(url, params, encoding, encoding);
+  }
+
+  /**
+   * 调用HttpGet请求。
+   * 
+   * @param url URL地址
+   * @param params 请求参数
+   * @param submitEncoding 提交参数编码格式
+   * @param resultEncoding 返回结果编码格式
+   * @return 返回响应消息字符串。
+   */
+  public static String doGet(String url, Map<String, String> params, String submitEncoding,
+      String resultEncoding) {
     String res = "";
     try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-      HttpGet httpGet = genHttpGet(url, params);
+      HttpGet httpGet = genHttpGet(url, params, submitEncoding);
       HttpEntity replyEntity = httpClient.execute(httpGet).getEntity();
-      res = EntityUtils.toString(replyEntity, Encoding.UTF8);
+      res = EntityUtils.toString(replyEntity, resultEncoding);
       return res;
     } catch (Exception e) {
       logError(url, HttpUtils.genParamsStr(params), res, e);
@@ -79,11 +106,37 @@ public class HttpClientUtils {
    * @return 返回响应消息字符串。
    */
   public static String doPost(String url, Map<String, String> params) {
+    return doPost(url, params, Encoding.UTF8);
+  }
+
+  /**
+   * 调用HttpPost请求。
+   * 
+   * @param url URL地址
+   * @param params 请求参数
+   * @param encoding 编码格式
+   * @return 返回响应消息字符串。
+   */
+  public static String doPost(String url, Map<String, String> params, String encoding) {
+    return doPost(url, params, encoding, encoding);
+  }
+
+  /**
+   * 调用HttpPost请求。
+   * 
+   * @param url URL地址
+   * @param params 请求参数
+   * @param submitEncoding 提交参数编码格式
+   * @param resultEncoding 返回结果编码格式
+   * @return 返回响应消息字符串。
+   */
+  public static String doPost(String url, Map<String, String> params, String submitEncoding,
+      String resultEncoding) {
     String res = "";
     try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-      HttpPost httpPost = genHttpPost(url, params);
+      HttpPost httpPost = genHttpPost(url, params, submitEncoding);
       HttpEntity replyEntity = httpClient.execute(httpPost).getEntity();
-      res = EntityUtils.toString(replyEntity, Encoding.UTF8);
+      res = EntityUtils.toString(replyEntity, resultEncoding);
       return res;
     } catch (Exception e) {
       logError(url, HttpUtils.genParamsStr(params), res, e);
@@ -142,13 +195,15 @@ public class HttpClientUtils {
    * 
    * @param url URL地址
    * @param params 请求参数
+   * @param encoding 编码格式
    * @return 返回HttpGet请求对象。
    * @throws URISyntaxException 抛出URISyntaxException异常
    */
-  private static HttpGet genHttpGet(String url, Map<String, String> params)
+  private static HttpGet genHttpGet(String url, Map<String, String> params, String encoding)
       throws URISyntaxException {
     URIBuilder builder = new URIBuilder(url);
     builder.addParameters(mapToPairs(params));
+    builder.setCharset(Charset.forName(encoding));
     URI uri = builder.build();
     HttpGet httpGet = new HttpGet(uri);
     httpGet.setConfig(getDefaultRequestConfig());
@@ -160,13 +215,14 @@ public class HttpClientUtils {
    * 
    * @param url URL地址
    * @param params 请求参数
+   * @param encoding 编码格式
    * @return 返回HttpPost请求对象。
    * @throws UnsupportedEncodingException 抛出UnsupportedEncodingException异常
    */
-  private static HttpPost genHttpPost(String url, Map<String, String> params)
+  private static HttpPost genHttpPost(String url, Map<String, String> params, String encoding)
       throws UnsupportedEncodingException {
     HttpPost httpPost = new HttpPost(url);
-    UrlEncodedFormEntity entity = new UrlEncodedFormEntity(mapToPairs(params), Encoding.UTF8);
+    UrlEncodedFormEntity entity = new UrlEncodedFormEntity(mapToPairs(params), encoding);
     httpPost.setEntity(entity);
     httpPost.setConfig(getDefaultRequestConfig());
     return httpPost;
