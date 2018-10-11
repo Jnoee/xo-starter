@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Cache;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.FlushModeType;
 import javax.persistence.Id;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
@@ -314,7 +315,13 @@ public class Dao<E> {
     Criteria<E> criteria = createCriteria();
     criteria.eq(name, value);
     try {
-      return criteria.toTypedQuery().setHint("org.hibernate.cacheable", true).getSingleResult();
+      TypedQuery<E> query = criteria.toTypedQuery();
+      // 启用查询缓存
+      query.setHint("org.hibernate.cacheable", true);
+      // 用于解决spring-data-jpa的审计功能bug
+      // 可参考：http://forum.spring.io/forum/spring-projects/data/106312-spring-data-jpa-infinite-loop-when-updating-but-not-saving-an-auditable-object
+      query.setFlushMode(FlushModeType.COMMIT);
+      return query.getSingleResult();
     } catch (NoResultException e) {
       return null;
     }
