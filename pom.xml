@@ -65,7 +65,7 @@
 		<module>xo-starter-xss</module>
 		<module>xo-starter-jpa</module>
 		<module>xo-starter-jpa-audit</module>
-		<module>xo-starter-jpa-ctut</module>
+		<module>xo-starter-jpa-search</module>
 		<module>xo-starter-jpa-bizlog</module>
 		<module>xo-starter-pay</module>
 		<module>xo-starter-excel</module>

@@ -5,14 +5,15 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.lucene.search.SortField;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.util.ThreadContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.jnoee.xo.jpa.bizlog.entity.BizLog;
-import com.github.jnoee.xo.jpa.dao.Dao;
-import com.github.jnoee.xo.jpa.query.Criteria;
+import com.github.jnoee.xo.jpa.search.dao.FullTextDao;
+import com.github.jnoee.xo.jpa.search.query.FullTextCriteria;
 import com.github.jnoee.xo.model.Page;
 import com.github.jnoee.xo.model.PageQuery;
 import com.github.jnoee.xo.shiro.auth.AuthUser;
@@ -25,7 +26,7 @@ public class BizLogService {
   @Autowired
   private AuthUserService<? extends AuthUser> authUserService;
   @Resource
-  private Dao<BizLog> bizLogDao;
+  private FullTextDao<BizLog> bizLogDao;
 
   /**
    * 记录普通日志。
@@ -72,9 +73,9 @@ public class BizLogService {
    */
   @Transactional(readOnly = true)
   public Page<BizLog> searchLog(PageQuery query) {
-    Criteria<BizLog> criteria = bizLogDao.createCriteria();
-    criteria.desc("operateTime");
-    return bizLogDao.findPage(criteria, query, "operator", "message");
+    FullTextCriteria criteria = bizLogDao.createFullTextCriteria();
+    criteria.desc("operateTime", SortField.Type.STRING);
+    return bizLogDao.searchPage(criteria, query);
   }
 
   /**
@@ -85,7 +86,10 @@ public class BizLogService {
    */
   @Transactional(readOnly = true)
   public List<BizLog> searchEntityLog(String entityId) {
-    return bizLogDao.findBy("entityId", entityId, "operateTime", false);
+    FullTextCriteria criteria = bizLogDao.createFullTextCriteria();
+    criteria.eq("entityId", entityId);
+    criteria.desc("operateTime", SortField.Type.STRING);
+    return bizLogDao.searchBy(criteria);
   }
 
   /**

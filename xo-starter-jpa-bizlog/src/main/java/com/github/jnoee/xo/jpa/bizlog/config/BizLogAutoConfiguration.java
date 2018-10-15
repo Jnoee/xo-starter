@@ -9,12 +9,12 @@ import com.github.jnoee.xo.jpa.bizlog.aspect.DetailLogAspect;
 import com.github.jnoee.xo.jpa.bizlog.aspect.SimpleLogAspect;
 import com.github.jnoee.xo.jpa.bizlog.service.BizLogService;
 import com.github.jnoee.xo.jpa.config.JpaAutoConfiguration;
-import com.github.jnoee.xo.jpa.dao.DaoScan;
+import com.github.jnoee.xo.jpa.search.dao.FullTextDaoScan;
 
 @Configuration
 @AutoConfigureAfter(value = JpaAutoConfiguration.class)
 @EntityScan("com.github.jnoee.xo.jpa.bizlog.entity")
-@DaoScan
+@FullTextDaoScan
 public class BizLogAutoConfiguration {
   @Bean
   public BizLogService bizLogService() {

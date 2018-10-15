@@ -43,7 +43,7 @@ public class DaoRegistrar implements ImportBeanDefinitionRegistrar {
    * @param entityClass 实体类
    * @return 返回DAO组件定义。
    */
-  private AnnotatedGenericBeanDefinition genDaoDefinition(Class<?> entityClass) {
+  protected AnnotatedGenericBeanDefinition genDaoDefinition(Class<?> entityClass) {
     AnnotatedGenericBeanDefinition daoDefinition = new AnnotatedGenericBeanDefinition(Dao.class);
     ConstructorArgumentValues av = new ConstructorArgumentValues();
     av.addGenericArgumentValue(entityClass);

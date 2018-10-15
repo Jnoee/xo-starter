@@ -12,6 +12,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jnoee.xo.exception.SysException;
 import com.github.jnoee.xo.jpa.bizlog.annotation.LogBean;
@@ -28,19 +33,24 @@ import lombok.Setter;
 /**
  * 业务日志。
  */
+@Indexed
 @Entity
 @Table(name = "BizLog")
 @Getter
 @Setter
 public class BizLog extends UuidEntity {
   /** 操作人 */
+  @Field(analyze = Analyze.NO)
   private String operator;
   /** 操作时间 */
+  @Field(analyze = Analyze.NO)
+  @SortableField
   @Temporal(TemporalType.TIMESTAMP)
   private Date operateTime;
   /** 实体ID */
   private String entityId;
   /** 日志信息 */
+  @Field(analyze = Analyze.NO)
   private String message;
   /** 原数据 */
   private String origData;

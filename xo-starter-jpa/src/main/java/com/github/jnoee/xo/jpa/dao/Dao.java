@@ -35,9 +35,9 @@ import lombok.Getter;
  */
 public class Dao<E> {
   @Getter
-  private Class<E> entityClass;
+  protected Class<E> entityClass;
   @PersistenceContext
-  private EntityManager entityManager;
+  protected EntityManager entityManager;
 
   /**
    * 构造方法。
