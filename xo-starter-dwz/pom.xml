@@ -14,12 +14,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.github.jnoee</groupId>
-			<artifactId>xo-starter-shiro</artifactId>
+			<artifactId>xo-starter-kaptcha</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.jnoee</groupId>
-			<artifactId>xo-starter-kaptcha</artifactId>
+			<artifactId>xo-starter-auth-server</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>

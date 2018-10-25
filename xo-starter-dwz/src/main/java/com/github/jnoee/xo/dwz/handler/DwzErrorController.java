@@ -11,6 +11,8 @@ import javax.validation.ConstraintViolationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.validation.BindException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,6 +25,8 @@ import com.github.jnoee.xo.exception.BizException;
 import com.github.jnoee.xo.message.MessageSource;
 import com.github.jnoee.xo.utils.StringUtils;
 
+
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class DwzErrorController {
   @Autowired

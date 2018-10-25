@@ -16,8 +16,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.github.jnoee.xo.auth.server.AuthUser;
 import com.github.jnoee.xo.jpa.entity.UuidEntity;
-import com.github.jnoee.xo.shiro.auth.AuthUser;
 
 import lombok.Getter;
 import lombok.Setter;

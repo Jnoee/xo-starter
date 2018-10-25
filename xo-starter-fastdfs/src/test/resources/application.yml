@@ -10,4 +10,5 @@ fdfs:
 logging:
   level:
     com:
-      cntest: DEBUG
+      github:
+        jnoee: DEBUG

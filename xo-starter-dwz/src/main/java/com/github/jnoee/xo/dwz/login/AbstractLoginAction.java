@@ -11,11 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.github.jnoee.xo.auth.server.AuthUser;
+import com.github.jnoee.xo.auth.server.AuthUserService;
 import com.github.jnoee.xo.exception.BizException;
 import com.github.jnoee.xo.kaptcha.Kaptcha;
 import com.github.jnoee.xo.message.MessageSource;
-import com.github.jnoee.xo.shiro.auth.AuthUser;
-import com.github.jnoee.xo.shiro.auth.AuthUserService;
 
 /**
  * 登录基类。

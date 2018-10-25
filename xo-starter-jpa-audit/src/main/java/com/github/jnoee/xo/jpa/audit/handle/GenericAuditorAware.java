@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
 
-import com.github.jnoee.xo.shiro.auth.AuthUser;
-import com.github.jnoee.xo.shiro.auth.AuthUserService;
+import com.github.jnoee.xo.auth.server.AuthUser;
+import com.github.jnoee.xo.auth.server.AuthUserService;
 
 /**
  * 审计拦截器中获取审计人组件。
