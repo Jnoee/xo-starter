@@ -83,7 +83,7 @@ public class HttpClientUtils {
       res = EntityUtils.toString(replyEntity, resultEncoding);
       return res;
     } catch (Exception e) {
-      logError(url, HttpUtils.genParamsStr(params), res, e);
+      logError(url, UrlUtils.genParamsStr(params), res, e);
       throw new SysException("HttpClient调用失败", e);
     }
   }
@@ -139,7 +139,7 @@ public class HttpClientUtils {
       res = EntityUtils.toString(replyEntity, resultEncoding);
       return res;
     } catch (Exception e) {
-      logError(url, HttpUtils.genParamsStr(params), res, e);
+      logError(url, UrlUtils.genParamsStr(params), res, e);
       throw new SysException("HttpClient调用失败", e);
     }
   }
