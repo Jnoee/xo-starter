@@ -11,9 +11,9 @@
 	</parent>
 
 	<scm>
-		<url>http://git.kaow.cn:88/su/xo-starter</url>
-		<connection>scm:git:http://git.kaow.cn:88/su/xo-starter.git</connection>
-		<developerConnection>scm:git:http://git.kaow.cn:88/su/xo-starter.git</developerConnection>
+		<url>https://github.com/Jnoee/xo-starter</url>
+		<connection>scm:git:https://github.com/Jnoee/xo-starter.git</connection>
+		<developerConnection>scm:git:https://github.com/Jnoee/xo-starter.git</developerConnection>
 	</scm>
 
 	<dependencies>
