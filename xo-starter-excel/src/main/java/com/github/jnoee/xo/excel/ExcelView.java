@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
 import com.github.jnoee.xo.constant.Encoding;
-import com.github.jnoee.xo.utils.HttpUtils;
+import com.github.jnoee.xo.utils.UrlUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,7 +50,7 @@ public class ExcelView extends AbstractXlsxView {
   protected void buildExcelDocument(Map<String, Object> model, Workbook workbook,
       HttpServletRequest request, HttpServletResponse response) throws Exception {
     String excelName = fileName + ".xlsx";
-    response.setHeader("content-disposition", "attachment;filename=" + HttpUtils.encode(excelName));
+    response.setHeader("content-disposition", "attachment;filename=" + UrlUtils.encode(excelName));
     response.setCharacterEncoding(Encoding.UTF8);
   }
 }

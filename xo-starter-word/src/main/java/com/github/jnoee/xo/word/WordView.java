@@ -12,7 +12,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.web.servlet.view.AbstractView;
 
 import com.github.jnoee.xo.constant.Encoding;
-import com.github.jnoee.xo.utils.HttpUtils;
+import com.github.jnoee.xo.utils.UrlUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +39,7 @@ public class WordView extends AbstractView {
   protected final void renderMergedOutputModel(Map<String, Object> model,
       HttpServletRequest request, HttpServletResponse response) throws Exception {
     String docName = fileName + ".docx";
-    response.setHeader("content-disposition", "attachment;filename=" + HttpUtils.encode(docName));
+    response.setHeader("content-disposition", "attachment;filename=" + UrlUtils.encode(docName));
     response.setCharacterEncoding(Encoding.UTF8);
     response.setContentType(getContentType());
     XWPFDocument document = word.getDoc();

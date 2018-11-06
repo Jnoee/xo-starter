@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.jnoee.xo.constant.Encoding;
 import com.github.jnoee.xo.utils.HttpClientUtils;
-import com.github.jnoee.xo.utils.HttpUtils;
+import com.github.jnoee.xo.utils.UrlUtils;
 
 /**
  * 易宝支付组件。
@@ -25,7 +25,7 @@ public class YeePay {
     req.setServerNotifyUrl(properties.getNotifyUrl());
 
     String payUrl = properties.getNodeUrl();
-    payUrl += "?" + HttpUtils.genParamsStr(req.toSignMap(properties.getKey()), Encoding.GBK);
+    payUrl += "?" + UrlUtils.genParamsStr(req.toSignMap(properties.getKey()), Encoding.GBK);
     return payUrl;
   }
 
