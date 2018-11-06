@@ -45,7 +45,7 @@ public class AuthServerRealm extends AuthorizingRealm {
       throw new DisabledAccountException();
     }
 
-    AuthToken authToken = new AuthToken(username, authUserService.getPrivilegs(username));
+    AuthToken authToken = authUserService.genAuthToken(username);
     return new SimpleAuthenticationInfo(authToken, user.getPassword(),
         authHelper.getSaltByteSource(), getName());
   }

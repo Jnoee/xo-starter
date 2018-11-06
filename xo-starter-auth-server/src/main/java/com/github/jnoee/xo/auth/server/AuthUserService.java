@@ -1,7 +1,6 @@
 package com.github.jnoee.xo.auth.server;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -24,22 +23,27 @@ public interface AuthUserService<U extends AuthUser> {
   U getByUsername(String username);
 
   /**
-   * 获取指定用户的权限列表。默认返回空列表，对于需要权限控制的应用要覆盖重写该方法。
+   * 生成内部认证Token。默认权限列表为空列表，对于需要权限控制的应用要覆盖重写该方法。
    * 
-   * @param user 用户
-   * @return 返回指定用户的权限列表。
+   * @param username 用户名
+   * @return 返回生成的内部认证Token。
    */
-  default List<String> getPrivilegs(String username) {
-    return new ArrayList<>();
+  default AuthToken genAuthToken(String username) {
+    return new AuthToken(username, new ArrayList<>());
   }
 
   /**
-   * 获取当前登录用户的权限列表。
+   * 获取当前会话认证令牌。
    * 
-   * @return 返回当前登录用户的权限列表。
+   * @return 返回当前会话认证令牌。
    */
-  default List<String> getPrivilegs() {
-    return getPrivilegs(getLogonUser().getUsername());
+  @SuppressWarnings("unchecked")
+  default <T extends AuthToken> T getAuthToken() {
+    try {
+      return (T) SecurityUtils.getSubject().getPrincipal();
+    } catch (Exception e) {
+      throw new UnauthenticatedException("获取当前会话认证令牌时发生异常。", e);
+    }
   }
 
   /**
@@ -52,6 +56,13 @@ public interface AuthUserService<U extends AuthUser> {
     AuthenticationToken token = new UsernamePasswordToken(username, password);
     Subject subject = SecurityUtils.getSubject();
     subject.login(token);
+  }
+
+  /**
+   * 退出登录。
+   */
+  default void logout() {
+    SecurityUtils.getSubject().logout();
   }
 
   /**
