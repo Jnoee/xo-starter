@@ -1,8 +1,12 @@
 package com.github.jnoee.xo.swagger.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import lombok.Data;
+import springfox.documentation.swagger.web.SwaggerResource;
 
 /**
  * API文档配置属性。
@@ -14,4 +18,5 @@ public class SwaggerProperties {
   private String description;
   private String version;
   private String basePackage;
+  private List<SwaggerResource> resources = new ArrayList<>();
 }

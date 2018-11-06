@@ -2,10 +2,12 @@ package com.github.jnoee.xo.swagger.config;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import com.google.common.collect.Lists;
 
@@ -19,6 +21,7 @@ import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -43,6 +46,19 @@ public class SwaggerAutoConfiguration {
     setDocketSecurity(apiDocket);
     return apiDocket.select().apis(RequestHandlerSelectors.basePackage(prop.getBasePackage()))
         .paths(PathSelectors.any()).build();
+  }
+
+  /**
+   * 配置API整合文档组件。
+   * 
+   * @param prop 配置组件
+   * @return 返回API整合文档组件。
+   */
+  @Bean
+  @Primary
+  @ConditionalOnProperty("xo.api.doc.resources[0].url")
+  public SwaggerResourcesProvider provider(SwaggerProperties prop) {
+    return prop::getResources;
   }
 
   /**
