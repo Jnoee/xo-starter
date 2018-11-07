@@ -9,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.jnoee.xo.config.BaseAutoConfiguration;
-import com.github.jnoee.xo.message.MessageSource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -21,12 +20,12 @@ public class MessageSourceTest {
   @Test
   public void testGetFromXml() {
     String moduleName = messageSource.get("xml.module.name");
-    Assert.assertEquals("su-starter-base", moduleName);
+    Assert.assertEquals("xo-starter-base", moduleName);
   }
 
   @Test
   public void testGetFromYml() {
     String moduleName = messageSource.get("yml.module.name");
-    Assert.assertEquals("su-starter-base", moduleName);
+    Assert.assertEquals("xo-starter-base", moduleName);
   }
 }
