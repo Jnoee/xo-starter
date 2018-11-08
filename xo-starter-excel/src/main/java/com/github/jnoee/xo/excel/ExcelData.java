@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jxls.common.Context;
+
+import com.github.jnoee.xo.utils.BeanUtils;
+import com.github.jnoee.xo.utils.CollectionUtils;
+
 import lombok.Data;
 
 /**
@@ -20,9 +25,24 @@ public class ExcelData {
   /** 工作表名称字段 */
   private String sheetNameField = "name";
   /** 工作表数据模型名称 */
-  private String sheetModelName;
+  private String sheetModelName = "sheetModels";
   /** 除工作表模型外的数据模型 */
-  private Map<String, ?> otherModel;
+  private Map<String, Object> otherModel;
   /** 多工作表开始位置 */
   private Integer startSheetNum = 0;
+
+  public Context toContext() {
+    Context context = new Context();
+    if (CollectionUtils.isNotEmpty(otherModel)) {
+      context = new Context(otherModel);
+    }
+    context.putVar(sheetModelName, sheetModels);
+    if (sheetNames.isEmpty()) {
+      for (Object sheetModel : sheetModels) {
+        sheetNames.add(BeanUtils.getField(sheetModel, sheetNameField).toString());
+      }
+    }
+    context.putVar("sheetNames", sheetNames);
+    return context;
+  }
 }

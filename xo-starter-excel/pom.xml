@@ -13,12 +13,12 @@
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.jxls</groupId>
-			<artifactId>jxls-core</artifactId>
+			<groupId>org.jxls</groupId>
+			<artifactId>jxls</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.jxls</groupId>
-			<artifactId>jxls-reader</artifactId>
+			<groupId>org.jxls</groupId>
+			<artifactId>jxls-poi</artifactId>
 		</dependency>
 	</dependencies>
 </project>

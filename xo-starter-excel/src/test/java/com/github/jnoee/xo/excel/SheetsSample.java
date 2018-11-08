@@ -10,11 +10,10 @@ public class SheetsSample extends AbstractSample {
   @Test
   public void test() throws Exception {
     ExcelData data = new ExcelData();
-    data.setTemplateName("sheets");
+    data.setSheetModelName("departments");
     data.setSheetModels(Department.multi(3));
-    data.setSheetModelName("department");
 
-    Excel excel = excelFactory.create(data);
+    Excel excel = excelFactory.create("sheets", data);
     excel.writeTo(new FileOutputStream(outputDir + "/sheets_export.xlsx"));
   }
 }
