@@ -10,6 +10,8 @@ import javax.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,23 +33,13 @@ public class WebErrorController {
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(BindException.class)
   public ErrorResponse handleBind(BindException e) {
-    List<String> errorMsgs = new ArrayList<>();
-    List<ObjectError> bindErrors = e.getBindingResult().getAllErrors();
-    for (ObjectError bindError : bindErrors) {
-      errorMsgs.add(bindError.getDefaultMessage());
-    }
-    return new ErrorResponse("E990", messageSource.get("E990", StringUtils.join(errorMsgs, "|")));
+    return genErrorResponse(e.getBindingResult());
   }
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ErrorResponse handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
-    List<String> errorMsgs = new ArrayList<>();
-    List<ObjectError> bindErrors = e.getBindingResult().getAllErrors();
-    for (ObjectError bindError : bindErrors) {
-      errorMsgs.add(bindError.getDefaultMessage());
-    }
-    return new ErrorResponse("E990", messageSource.get("E990", StringUtils.join(errorMsgs, "|")));
+    return genErrorResponse(e.getBindingResult());
   }
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -65,5 +57,19 @@ public class WebErrorController {
   @ExceptionHandler(BizException.class)
   public ErrorResponse handleBiz(BizException e) {
     return new ErrorResponse(e.getCode(), e.getMsg());
+  }
+
+  private ErrorResponse genErrorResponse(BindingResult bindingResult) {
+    List<String> errorMsgs = new ArrayList<>();
+    List<ObjectError> bindErrors = bindingResult.getAllErrors();
+    for (ObjectError bindError : bindErrors) {
+      if (bindError instanceof FieldError) {
+        FieldError fieldError = (FieldError) bindError;
+        errorMsgs.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
+      } else {
+        errorMsgs.add(bindError.getDefaultMessage());
+      }
+    }
+    return new ErrorResponse("E990", messageSource.get("E990", StringUtils.join(errorMsgs, "|")));
   }
 }

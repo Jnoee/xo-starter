@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,24 +36,12 @@ public class DwzErrorController {
 
   @ExceptionHandler(BindException.class)
   public ModelAndView handleBind(BindException e) {
-    List<String> errorMsgs = new ArrayList<>();
-    List<ObjectError> bindErrors = e.getBindingResult().getAllErrors();
-    for (ObjectError bindError : bindErrors) {
-      errorMsgs.add(bindError.getDefaultMessage());
-    }
-    return new DwzResultBuild().error(messageSource.get("E990", StringUtils.join(errorMsgs, "|")))
-        .buildView();
+    return genErrorModelAndView(e.getBindingResult());
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ModelAndView handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
-    List<String> errorMsgs = new ArrayList<>();
-    List<ObjectError> bindErrors = e.getBindingResult().getAllErrors();
-    for (ObjectError bindError : bindErrors) {
-      errorMsgs.add(bindError.getDefaultMessage());
-    }
-    return new DwzResultBuild().error(messageSource.get("E990", StringUtils.join(errorMsgs, "|")))
-        .buildView();
+    return genErrorModelAndView(e.getBindingResult());
   }
 
   @ExceptionHandler(ConstraintViolationException.class)
@@ -71,7 +61,7 @@ public class DwzErrorController {
   }
 
   @ExceptionHandler(AuthorizationException.class)
-  public ModelAndView handleAuthentication(HttpServletRequest request) {
+  public ModelAndView handleAuthentication(HttpServletRequest request, AuthorizationException e) {
     if (isAjaxRequest(request)) {
       return new DwzResultBuild().timeout().buildView();
     } else {
@@ -86,6 +76,21 @@ public class DwzErrorController {
     } else {
       return new ModelAndView("redirect:/login");
     }
+  }
+
+  private ModelAndView genErrorModelAndView(BindingResult bindingResult) {
+    List<String> errorMsgs = new ArrayList<>();
+    List<ObjectError> bindErrors = bindingResult.getAllErrors();
+    for (ObjectError bindError : bindErrors) {
+      if (bindError instanceof FieldError) {
+        FieldError fieldError = (FieldError) bindError;
+        errorMsgs.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
+      } else {
+        errorMsgs.add(bindError.getDefaultMessage());
+      }
+    }
+    return new DwzResultBuild().error(messageSource.get("E990", StringUtils.join(errorMsgs, "|")))
+        .buildView();
   }
 
   /**
