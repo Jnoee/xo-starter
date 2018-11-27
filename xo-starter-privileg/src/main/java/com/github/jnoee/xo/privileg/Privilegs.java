@@ -19,10 +19,20 @@ public class Privilegs {
   @JacksonXmlProperty(localName = "module")
   private List<Module> modules = new ArrayList<>();
 
-  public List<Module> getModules() {
-    if (modules == null) {
-      modules = new ArrayList<>();
+  /**
+   * 根据权限编码生成权限配置。
+   * 
+   * @param codes 权限编码列表
+   * @return 返回生成的权限配置。
+   */
+  public Privilegs gen(List<String> codes) {
+    Privilegs privilegs = new Privilegs();
+    for (Module module : modules) {
+      Module distModule = module.gen(codes);
+      if (!distModule.getResources().isEmpty()) {
+        privilegs.getModules().add(distModule);
+      }
     }
-    return modules;
+    return privilegs;
   }
 }

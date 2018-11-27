@@ -18,4 +18,22 @@ public class Module {
   @JacksonXmlElementWrapper(useWrapping = false)
   @JacksonXmlProperty(localName = "resource")
   private List<Resource> resources = new ArrayList<>();
+
+  /**
+   * 根据权限编码生成权限模块。
+   * 
+   * @param codes 权限编码列表
+   * @return 返货生成的权限模块。
+   */
+  public Module gen(List<String> codes) {
+    Module module = new Module();
+    module.name = name;
+    for (Resource resource : resources) {
+      Resource distResource = resource.gen(codes);
+      if (!distResource.getOperates().isEmpty()) {
+        module.getResources().add(distResource);
+      }
+    }
+    return module;
+  }
 }

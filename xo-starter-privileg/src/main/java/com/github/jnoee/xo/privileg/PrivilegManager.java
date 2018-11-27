@@ -1,6 +1,7 @@
 package com.github.jnoee.xo.privileg;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -20,6 +21,16 @@ public class PrivilegManager {
   private static final String PRIVILEGS_DIR = "classpath*:/META-INF/xo/";
   private static final String PRIVILEGS_PATH = PRIVILEGS_DIR + "*privilegs.xml";
   private Privilegs privilegs = new Privilegs();
+
+  /**
+   * 根据权限编码列表生成权限配置。（用于分级授权）
+   * 
+   * @param codes 权限编码列表
+   * @return 返回生成的权限配置。
+   */
+  public Privilegs genPrivilegsByCodes(List<String> codes) {
+    return privilegs.gen(codes);
+  }
 
   /**
    * 初始化加载权限配置文件。
