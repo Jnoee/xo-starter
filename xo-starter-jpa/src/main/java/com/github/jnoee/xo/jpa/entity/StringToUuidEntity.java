@@ -4,6 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
 import com.github.jnoee.xo.jpa.dao.DaoUtils;
+import com.github.jnoee.xo.utils.StringUtils;
 
 /**
  * 字符串转换成UuidEntity转换器工厂。
@@ -38,7 +39,7 @@ public class StringToUuidEntity implements ConverterFactory<String, UuidEntity> 
      * @return 返回UuidEntity对象。
      */
     public T convert(String source) {
-      if (source.length() == 0) {
+      if (StringUtils.isBlank(source)) {
         return null;
       }
       return DaoUtils.getEntity(toClass, source.trim());
