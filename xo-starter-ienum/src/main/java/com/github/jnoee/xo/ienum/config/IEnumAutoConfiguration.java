@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Import;
 import com.fasterxml.jackson.databind.Module;
 import com.github.jnoee.xo.ienum.jackson.IEnumModule;
 
+/**
+ * 枚举增强总配置。
+ */
 @Configuration
 @Import({IEnumJpaAutoConfiguration.class, IEnumWebAutoConfiguration.class})
 public class IEnumAutoConfiguration {

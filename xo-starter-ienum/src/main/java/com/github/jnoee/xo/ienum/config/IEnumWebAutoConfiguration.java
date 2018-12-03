@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.github.jnoee.xo.ienum.converter.IEnumToString;
 import com.github.jnoee.xo.ienum.converter.StringToIEnum;
 
+/**
+ * 枚举增强web配置。
+ */
 @Configuration
 @ConditionalOnWebApplication
 public class IEnumWebAutoConfiguration implements WebMvcConfigurer {

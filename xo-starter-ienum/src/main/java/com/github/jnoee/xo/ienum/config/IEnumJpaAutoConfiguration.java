@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfig
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 枚举增强JPA配置。
+ */
 @Configuration
 @ConditionalOnClass(UserType.class)
 @AutoConfigureAfter(value = JpaRepositoriesAutoConfiguration.class)
