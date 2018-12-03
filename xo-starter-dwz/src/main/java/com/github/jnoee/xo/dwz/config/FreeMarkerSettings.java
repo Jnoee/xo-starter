@@ -2,7 +2,7 @@ package com.github.jnoee.xo.dwz.config;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.github.jnoee.xo.mvc.freemarker.AbstractFreeMarkerSettings;
+import com.github.jnoee.xo.freemarker.AbstractFreeMarkerSettings;
 
 /**
  * FreeMarker配置组件。

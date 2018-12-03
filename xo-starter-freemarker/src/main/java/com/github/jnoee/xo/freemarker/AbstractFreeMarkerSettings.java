@@ -1,4 +1,4 @@
-package com.github.jnoee.xo.mvc.freemarker;
+package com.github.jnoee.xo.freemarker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Map;
 import lombok.Data;
 
 /**
- * FreeMarker设置抽象类。
+ * FreeMarker配置抽象类。
  */
 @Data
 public abstract class AbstractFreeMarkerSettings implements Comparable<AbstractFreeMarkerSettings> {

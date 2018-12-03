@@ -9,12 +9,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.jnoee</groupId>
-			<artifactId>xo-starter-web</artifactId>
+			<artifactId>xo-starter-freemarker</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
+			<groupId>com.github.jnoee</groupId>
+			<artifactId>xo-starter-web</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>

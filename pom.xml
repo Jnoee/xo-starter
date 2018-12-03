@@ -60,7 +60,8 @@
 		<module>xo-starter-auth-server</module>
 		<module>xo-starter-auth-client</module>
 		<module>xo-starter-auth-feign</module>
-		<module>xo-starter-shiro</module>
+		<module>xo-starter-freemarker</module>
+		<module>xo-starter-mail</module>
 		<module>xo-starter-jpa</module>
 		<module>xo-starter-jpa-search</module>
 		<module>xo-starter-jpa-audit</module>

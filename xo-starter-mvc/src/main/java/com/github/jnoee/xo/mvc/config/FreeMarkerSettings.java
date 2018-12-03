@@ -1,6 +1,6 @@
 package com.github.jnoee.xo.mvc.config;
 
-import com.github.jnoee.xo.mvc.freemarker.AbstractFreeMarkerSettings;
+import com.github.jnoee.xo.freemarker.AbstractFreeMarkerSettings;
 import com.github.jnoee.xo.utils.DateUtils;
 import com.github.jnoee.xo.utils.StringUtils;
 

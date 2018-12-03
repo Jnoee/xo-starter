@@ -1,32 +1,15 @@
 package com.github.jnoee.xo.mvc.config;
 
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import com.github.jnoee.xo.mvc.freemarker.GenericFreeMarkerConfigurer;
 import com.github.jnoee.xo.mvc.handler.GenericWebServerFactoryCustomizer;
 
 @Configuration
-@EnableConfigurationProperties({FreeMarkerProperties.class})
 public class MvcAutoConfiguration implements WebMvcConfigurer {
-  /**
-   * 配置FreeMarker模版组件。
-   * 
-   * @param freemarkerProperties FreeMarker配置属性
-   * @return 返回FreeMarker模版组件。
-   */
-  @Bean
-  public FreeMarkerConfigurer freemarkerConfigurer(FreeMarkerProperties freemarkerProperties) {
-    GenericFreeMarkerConfigurer configurer = new GenericFreeMarkerConfigurer();
-    configurer.setFreemarkerSettings(freemarkerProperties.toProperties());
-    return configurer;
-  }
-
   @Bean("com.github.jnoee.xo.mvc.config.FreeMarkerSettings")
   public FreeMarkerSettings freemarkerSettings() {
     return new FreeMarkerSettings();
