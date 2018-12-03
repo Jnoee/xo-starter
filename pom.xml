@@ -65,6 +65,7 @@
 		<module>xo-starter-jpa</module>
 		<module>xo-starter-jpa-search</module>
 		<module>xo-starter-jpa-audit</module>
+		<module>xo-starter-ienum</module>
 		<module>xo-starter-mvc</module>
 		<module>xo-starter-dwz</module>
 		<module>xo-starter-pay</module>

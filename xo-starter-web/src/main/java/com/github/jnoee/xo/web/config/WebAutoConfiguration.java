@@ -16,12 +16,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jnoee.xo.utils.DateUtils;
-import com.github.jnoee.xo.web.converter.IEnumToString;
-import com.github.jnoee.xo.web.converter.StringToIEnum;
 import com.github.jnoee.xo.web.handler.ErrorView;
 import com.github.jnoee.xo.web.handler.WebErrorAttributes;
 import com.github.jnoee.xo.web.handler.WebErrorController;
-import com.github.jnoee.xo.web.jackson.IEnumModule;
 
 /**
  * 组件配置。
@@ -62,16 +59,6 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
   }
 
   /**
-   * 配置IEnum Jackson转换组件。
-   * 
-   * @return 返回IEnum Jackson转换组件。
-   */
-  @Bean
-  public IEnumModule ienumModule() {
-    return new IEnumModule();
-  }
-
-  /**
    * 配置跨域支持组件。
    * 
    * @return 返回跨域支持组件。
@@ -102,9 +89,5 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
     // 添加DateTimeFormat注解的日期时间转换器
     registry.addFormatterForFieldAnnotation(new DateTimeFormatAnnotationFormatterFactory());
     registry.addFormatterForFieldAnnotation(new JodaDateTimeFormatAnnotationFormatterFactory());
-
-    registry.removeConvertible(String.class, Enum.class);
-    registry.addConverterFactory(new StringToIEnum());
-    registry.addConverter(new IEnumToString());
   }
 }

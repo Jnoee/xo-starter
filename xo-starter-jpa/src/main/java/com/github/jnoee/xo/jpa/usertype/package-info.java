@@ -1,6 +1,4 @@
-@TypeDefs(value = {@TypeDef(name = "IEnum", typeClass = IEnumUserType.class),
-    @TypeDef(name = "IEnumList", typeClass = IEnumListUserType.class),
-    @TypeDef(name = "Json", typeClass = JsonUserType.class),
+@TypeDefs(value = {@TypeDef(name = "Json", typeClass = JsonUserType.class),
     @TypeDef(name = "JsonList", typeClass = JsonListUserType.class),
     @TypeDef(name = "UuidEntity", typeClass = UuidEntityUserType.class),
     @TypeDef(name = "UuidEntityList", typeClass = UuidEntityListUserType.class)})
