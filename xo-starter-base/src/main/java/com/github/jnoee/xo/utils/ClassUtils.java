@@ -61,6 +61,26 @@ public class ClassUtils {
   }
 
   /**
+   * 从类中获取包名。
+   * 
+   * @param targetClass 目标类
+   * @return 返回类的包名。
+   */
+  public static String getPackageName(Class<?> targetClass) {
+    return getPackageName(targetClass.getName());
+  }
+
+  /**
+   * 从类名中获取包名。
+   * 
+   * @param fullClassName 完整的类名
+   * @return 返回类名中的包名。
+   */
+  public static String getPackageName(String fullClassName) {
+    return StringUtils.substringBeforeLast(fullClassName, ".");
+  }
+
+  /**
    * 查找指定包下继承了指定类或实现了指定接口的类名集合。
    * 
    * @param parentClass 父类或接口
