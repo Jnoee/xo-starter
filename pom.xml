@@ -3,11 +3,27 @@
 	<artifactId>xo-starter</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
+	<name>xo-starter</name>
+	<description>xo-starter</description>
+	<url>https://github.com/Jnoee/xo-starter</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>jnoee</name>
+			<email>jnoee.he@gmail.com</email>
+		</developer>
+	</developers>
 
 	<parent>
 		<groupId>com.github.jnoee</groupId>
 		<artifactId>xo-dependencies</artifactId>
-		<version>1.0.4-SNAPSHOT</version>
+		<version>1.0.4</version>
 	</parent>
 
 	<scm>
