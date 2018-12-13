@@ -106,7 +106,7 @@ public class VoUtils {
    * 将源分页对象复制成目标分页对象，忽略源对象中为null的Field。
    * 
    * @param <T> 目标对象类型
-   * @param sources 源对象列表
+   * @param sourcePage 源分页对象
    * @param targetClass 目标对象类
    * @return 返回目标分页对象。
    */
