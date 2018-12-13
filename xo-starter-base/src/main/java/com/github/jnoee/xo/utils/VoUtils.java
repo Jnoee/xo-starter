@@ -13,6 +13,7 @@ public class VoUtils {
   /**
    * 将源对象复制成目标对象，忽略源对象中为null的Field。
    * 
+   * @param <T> 目标对象类型
    * @param source 源对象
    * @param targetClass 目标对象类
    * @return 返回目标对象。
@@ -24,6 +25,7 @@ public class VoUtils {
   /**
    * 将源对象复制成目标对象，忽略源对象中为null的Field。
    * 
+   * @param <T> 目标对象类型
    * @param source 源对象
    * @param targetClass 目标对象类
    * @param excludeFields 不复制的Field的名称，多个名称之间用“,”分割
@@ -36,6 +38,7 @@ public class VoUtils {
   /**
    * 将源对象复制成目标对象，忽略源对象中为null的Field，但如果指定了要复制的Field，则为null时该Field也复制。
    * 
+   * @param <T> 目标对象类型
    * @param source 源对象
    * @param targetClass 目标对象类
    * @param includeFields 要复制的Field的名称，多个名称之间用“,”分割
@@ -56,6 +59,7 @@ public class VoUtils {
   /**
    * 将源对象列表复制成目标对象列表，忽略源对象中为null的Field。
    * 
+   * @param <T> 目标对象类型
    * @param sourceList 源对象列表
    * @param targetClass 目标对象类
    * @return 返回目标对象列表。
@@ -67,6 +71,7 @@ public class VoUtils {
   /**
    * 将源对象列表复制成目标对象列表，忽略源对象中为null的Field。
    * 
+   * @param <T> 目标对象类型
    * @param sourceList 源对象列表
    * @param targetClass 目标对象类
    * @param excludeFields 不复制的Field的名称，多个名称之间用“,”分割
@@ -79,6 +84,7 @@ public class VoUtils {
   /**
    * 将源对象列表复制成目标对象列表，忽略源对象中为null的Field，但如果指定了要复制的Field，则为null时该Field也复制。
    * 
+   * @param <T> 目标对象类型
    * @param sourceList 源对象列表
    * @param targetClass 目标对象类
    * @param includeFields 要复制的Field的名称，多个名称之间用“,”分割
@@ -99,6 +105,7 @@ public class VoUtils {
   /**
    * 将源分页对象复制成目标分页对象，忽略源对象中为null的Field。
    * 
+   * @param <T> 目标对象类型
    * @param sources 源对象列表
    * @param targetClass 目标对象类
    * @return 返回目标分页对象。
@@ -110,6 +117,7 @@ public class VoUtils {
   /**
    * 将源分页对象复制成目标分页对象，忽略源对象中为null的Field。
    * 
+   * @param <T> 目标对象类型
    * @param sourcePage 源分页对象
    * @param targetClass 目标对象类
    * @param excludeFields 不复制的Field的名称，多个名称之间用“,”分割
@@ -122,6 +130,7 @@ public class VoUtils {
   /**
    * 将源分页对象复制成目标分页对象，忽略源对象中为null的Field，但如果指定了要复制的Field，则为null时该Field也复制。
    * 
+   * @param <T> 目标对象类型
    * @param sourcePage 源分页对象
    * @param targetClass 目标对象类
    * @param includeFields 要复制的Field的名称，多个名称之间用“,”分割

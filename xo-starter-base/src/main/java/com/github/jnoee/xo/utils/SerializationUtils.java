@@ -18,6 +18,7 @@ public class SerializationUtils {
   /**
    * 深度克隆对象。
    * 
+   * @param <T> 对象类型
    * @param source 源对象
    * @return 返回深度克隆对象。
    */
@@ -66,6 +67,7 @@ public class SerializationUtils {
   /**
    * 从指定的输入流反序列化对象。
    * 
+   * @param <T> 反序列化对象类型
    * @param inputStream 输入流
    * @return 返回反序列化对象。
    */
@@ -82,6 +84,7 @@ public class SerializationUtils {
   /**
    * 从指定的字节数组反序列化对象。
    * 
+   * @param <T> 反序列化对象类型
    * @param objectData 字节数组
    * @return 返回反序列化对象。
    */
