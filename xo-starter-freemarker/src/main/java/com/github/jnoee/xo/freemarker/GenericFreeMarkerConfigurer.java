@@ -43,6 +43,7 @@ public interface GenericFreeMarkerConfigurer extends ApplicationContextAware {
   /**
    * 初始化枚举变量。
    * 
+   * @param enumClasses 枚举类列表
    * @throws TemplateModelException 初始化枚举变量失败时抛出异常
    */
   default void initEnums(List<Class<?>> enumClasses) throws TemplateModelException {
@@ -60,6 +61,7 @@ public interface GenericFreeMarkerConfigurer extends ApplicationContextAware {
   /**
    * 初始化静态变量。
    * 
+   * @param staticClasses 静态类列表
    * @throws TemplateModelException 初始化静态变量失败时抛出异常。
    */
   default void initStatics(List<Class<?>> staticClasses) throws TemplateModelException {
@@ -77,6 +79,7 @@ public interface GenericFreeMarkerConfigurer extends ApplicationContextAware {
   /**
    * 初始化公共变量。
    * 
+   * @param globalBeans 公共变量列表
    * @throws TemplateModelException 初始化公共变量失败时抛出异常。
    */
   default void initSharedVariables(Map<String, String> globalBeans) throws TemplateModelException {
@@ -92,6 +95,8 @@ public interface GenericFreeMarkerConfigurer extends ApplicationContextAware {
 
   /**
    * 初始化自动包含文件。
+   * 
+   * @param autoIncludes 自动包含文件
    */
   default void initAutoIncludes(List<String> autoIncludes) {
     for (String autoInclude : autoIncludes) {
@@ -104,6 +109,8 @@ public interface GenericFreeMarkerConfigurer extends ApplicationContextAware {
 
   /**
    * 初始化自动导入文件。
+   * 
+   * @param autoImports 自动导入文件
    */
   default void initAutoImports(Map<String, String> autoImports) {
     for (Entry<String, String> autoImport : autoImports.entrySet()) {

@@ -12,6 +12,8 @@ import com.github.jnoee.xo.auth.AuthToken;
 
 /**
  * 认证服务。
+ * 
+ * @param <U> 认证用户类型
  */
 public interface AuthUserService<U extends AuthUser> {
   /**
