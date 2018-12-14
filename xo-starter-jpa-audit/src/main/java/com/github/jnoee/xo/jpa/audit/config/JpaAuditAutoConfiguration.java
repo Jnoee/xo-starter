@@ -22,22 +22,22 @@ import com.github.jnoee.xo.jpa.search.dao.FullTextDaoScan;
 @FullTextDaoScan
 public class JpaAuditAutoConfiguration {
   @Bean
-  public AuditorAware<AuthUser> auditorAware() {
+  AuditorAware<AuthUser> auditorAware() {
     return new GenericAuditorAware();
   }
 
   @Bean
-  public BizLogService bizLogService() {
+  BizLogService bizLogService() {
     return new BizLogService();
   }
 
   @Bean
-  public SimpleLogAspect simpleLogAspect() {
+  SimpleLogAspect simpleLogAspect() {
     return new SimpleLogAspect();
   }
 
   @Bean
-  public DetailLogAspect detailLogAspect() {
+  DetailLogAspect detailLogAspect() {
     return new DetailLogAspect();
   }
 }

@@ -19,7 +19,7 @@ public class FastDFSAutoConfiguration {
    * @return 返回FastDFS客户端组件。
    */
   @Bean
-  public FastFileClient fastFileClient() {
+  FastFileClient fastFileClient() {
     return new FastFileClient();
   }
 }

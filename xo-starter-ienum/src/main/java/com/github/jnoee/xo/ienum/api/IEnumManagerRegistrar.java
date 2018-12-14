@@ -26,6 +26,7 @@ public class IEnumManagerRegistrar implements PackageScanRegistrar {
   /**
    * 生成组件定义。
    * 
+   * @param metadata 注解元数据
    * @return 返回组件定义。
    */
   protected GenericBeanDefinition genBeanDefinition(AnnotationMetadata metadata) {

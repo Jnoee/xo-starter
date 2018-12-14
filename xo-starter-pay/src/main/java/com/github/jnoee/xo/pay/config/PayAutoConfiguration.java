@@ -11,7 +11,7 @@ import com.github.jnoee.xo.pay.yee.YeePayProperties;
 @EnableConfigurationProperties(YeePayProperties.class)
 public class PayAutoConfiguration {
   @Bean
-  public YeePay yeePay() {
+  YeePay yeePay() {
     return new YeePay();
   }
 }

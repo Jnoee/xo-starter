@@ -13,17 +13,17 @@ import com.google.code.kaptcha.util.Config;
 @EnableConfigurationProperties(KaptchaProperties.class)
 public class KaptchaAutoConfiguration {
   @Bean
-  public KaptchaAction kaptchaAction() {
+  KaptchaAction kaptchaAction() {
     return new KaptchaAction();
   }
 
   @Bean
-  public Kaptcha kaptcha() {
+  Kaptcha kaptcha() {
     return new Kaptcha();
   }
 
   @Bean
-  public DefaultKaptcha defaultKaptcha(KaptchaProperties properties) {
+  DefaultKaptcha defaultKaptcha(KaptchaProperties properties) {
     DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
     Config config = new Config(properties.toProperties());
     defaultKaptcha.setConfig(config);

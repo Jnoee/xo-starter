@@ -11,12 +11,12 @@ import com.github.jnoee.xo.mvc.handler.GenericWebServerFactoryCustomizer;
 @Configuration
 public class MvcAutoConfiguration implements WebMvcConfigurer {
   @Bean("com.github.jnoee.xo.mvc.config.FreeMarkerSettings")
-  public FreeMarkerSettings freemarkerSettings() {
+  FreeMarkerSettings freemarkerSettings() {
     return new FreeMarkerSettings();
   }
 
   @Bean
-  public GenericWebServerFactoryCustomizer webServerFactoryCustomizer() {
+  GenericWebServerFactoryCustomizer webServerFactoryCustomizer() {
     return new GenericWebServerFactoryCustomizer();
   }
 

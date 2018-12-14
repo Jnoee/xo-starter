@@ -14,12 +14,12 @@ import com.github.jnoee.xo.auth.handle.AuthErrorController;
 @EnableConfigurationProperties(AuthProperties.class)
 public class AuthAutoConfiguration {
   @Bean
-  public AuthHelper authHelper() {
+  AuthHelper authHelper() {
     return new AuthHelper();
   }
 
   @Bean
-  public AuthErrorController authErrorController() {
+  AuthErrorController authErrorController() {
     return new AuthErrorController();
   }
 }

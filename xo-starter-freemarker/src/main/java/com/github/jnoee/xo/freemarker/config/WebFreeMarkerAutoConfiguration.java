@@ -24,7 +24,7 @@ public class WebFreeMarkerAutoConfiguration {
    * @return 返回FreeMarkerConfigurer组件。
    */
   @Bean
-  public FreeMarkerConfigurer freemarkerConfigurer(FreeMarkerProperties freemarkerProperties) {
+  FreeMarkerConfigurer freemarkerConfigurer(FreeMarkerProperties freemarkerProperties) {
     WebFreeMarkerConfigurer configurer = new WebFreeMarkerConfigurer();
     configurer.setFreemarkerSettings(freemarkerProperties.toProperties());
     return configurer;

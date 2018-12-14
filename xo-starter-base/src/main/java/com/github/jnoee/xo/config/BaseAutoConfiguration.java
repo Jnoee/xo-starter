@@ -17,7 +17,7 @@ public class BaseAutoConfiguration {
    * @return 返回信息组件。
    */
   @Bean
-  public MessageSource messageSource() {
+  MessageSource messageSource() {
     return new MessageSource();
   }
 
@@ -27,7 +27,7 @@ public class BaseAutoConfiguration {
    * @return 返回Spring工具组件。
    */
   @Bean
-  public SpringUtils springUtils() {
+  SpringUtils springUtils() {
     return new SpringUtils();
   }
 }

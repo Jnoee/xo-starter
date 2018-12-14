@@ -10,7 +10,7 @@ import com.github.jnoee.xo.word.WordFactory;
 @EnableConfigurationProperties(WordProperties.class)
 public class WordAutoConfiguration {
   @Bean
-  public WordFactory wordFactory() {
+  WordFactory wordFactory() {
     return new WordFactory();
   }
 }

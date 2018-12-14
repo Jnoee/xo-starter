@@ -32,7 +32,7 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
    * @return 返回ErrorAttributes组件。
    */
   @Bean
-  public ErrorAttributes errorAttributes() {
+  ErrorAttributes errorAttributes() {
     return new WebErrorAttributes();
   }
 
@@ -42,7 +42,7 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
    * @return 返回异常处理组件。
    */
   @Bean
-  public WebErrorController webErrorController() {
+  WebErrorController webErrorController() {
     return new WebErrorController();
   }
 
@@ -54,7 +54,7 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
    * @return 返回异常视图。
    */
   @Bean(name = "error")
-  public View errorView(ObjectMapper objectMapper, ErrorAttributes errorAttributes) {
+  View errorView(ObjectMapper objectMapper, ErrorAttributes errorAttributes) {
     return new ErrorView(objectMapper, errorAttributes);
   }
 
@@ -64,7 +64,7 @@ public class WebAutoConfiguration implements WebMvcConfigurer {
    * @return 返回跨域支持组件。
    */
   @Bean
-  public CorsFilter corsFilter() {
+  CorsFilter corsFilter() {
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     final CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);

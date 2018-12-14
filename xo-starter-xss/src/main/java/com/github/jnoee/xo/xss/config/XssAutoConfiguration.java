@@ -10,7 +10,7 @@ import com.github.jnoee.xo.xss.jackson.XssModule;
 @Configuration
 public class XssAutoConfiguration {
   @Bean
-  public FilterRegistrationBean<XssFilter> xssFilterRegistration() {
+  FilterRegistrationBean<XssFilter> xssFilterRegistration() {
     FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
     registration.setFilter(new XssFilter());
     registration.addUrlPatterns("/*");

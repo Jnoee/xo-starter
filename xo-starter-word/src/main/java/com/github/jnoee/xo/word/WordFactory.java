@@ -42,6 +42,7 @@ public class WordFactory {
    * 
    * @param templateName 模版名称
    * @param model 数据模型
+   * @return 返回一个Word组件。
    */
   public Word create(String templateName, Object model) {
     return create(templateName, Configure.createDefault(), model);
@@ -51,7 +52,9 @@ public class WordFactory {
    * 创建一个Word组件。
    * 
    * @param templateName 模版名称
+   * @param config Word配置
    * @param model 数据模型
+   * @return 返回一个Word组件。
    */
   public Word create(String templateName, Configure config, Object model) {
     try (InputStream in = templates.get(templateName).getInputStream()) {

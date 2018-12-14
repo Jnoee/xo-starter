@@ -18,7 +18,7 @@ public interface ShiroConfigurationAware {
    * @return 返回SecurityManager组件。
    */
   @Bean
-  public default SecurityManager securityManager() {
+  default SecurityManager securityManager() {
     DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
     securityManager.setRealm(authRealm());
     return securityManager;
@@ -30,7 +30,7 @@ public interface ShiroConfigurationAware {
    * @return 返回DefaultAdvisorAutoProxyCreator组件。
    */
   @Bean
-  public default DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+  default DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
     DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator =
         new DefaultAdvisorAutoProxyCreator();
     defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
@@ -44,7 +44,7 @@ public interface ShiroConfigurationAware {
    * @return 返回AuthorizationAttributeSourceAdvisor组件。
    */
   @Bean
-  public default AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
+  default AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(
       SecurityManager securityManager) {
     AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
     advisor.setSecurityManager(securityManager);
@@ -57,17 +57,18 @@ public interface ShiroConfigurationAware {
    * @return 返回LifecycleBeanPostProcessor组件。
    */
   @Bean
-  public default LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+  default LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
     return new LifecycleBeanPostProcessor();
   }
 
   /**
    * 配置ShiroFilter组件。
    * 
+   * @param securityManager SecurityManager
    * @return 返回ShiroFilter组件。
    */
   @Bean
-  public default ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+  default ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
     ShiroFilterFactoryBean factory = new ShiroFilterFactoryBean();
     factory.setSecurityManager(securityManager);
     factory.setUnauthorizedUrl("/401");

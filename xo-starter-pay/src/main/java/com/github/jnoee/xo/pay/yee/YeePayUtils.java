@@ -41,6 +41,7 @@ public class YeePayUtils {
    * 
    * @param strs 字符数组
    * @param sign 待验证签名
+   * @param signSafe 安全签名
    * @param key 密钥
    * @return 如果验证通过返回true，否则返回false。
    */

@@ -18,17 +18,17 @@ import com.github.jnoee.xo.dwz.login.AuthCounter;
 public class DwzAutoConfiguration implements WebMvcConfigurer {
   @Bean
   @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-  public AuthCounter authCounter() {
+  AuthCounter authCounter() {
     return new AuthCounter();
   }
 
   @Bean("com.github.jnoee.xo.dwz.config.FreeMarkerSettings")
-  public FreeMarkerSettings freemarkerSettings() {
+  FreeMarkerSettings freemarkerSettings() {
     return new FreeMarkerSettings();
   }
 
   @Bean
-  public DwzErrorController dwzErrorController() {
+  DwzErrorController dwzErrorController() {
     return new DwzErrorController();
   }
 

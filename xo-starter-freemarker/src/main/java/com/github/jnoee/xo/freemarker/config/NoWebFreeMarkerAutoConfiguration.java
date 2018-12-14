@@ -20,7 +20,7 @@ public class NoWebFreeMarkerAutoConfiguration {
    * @return 返回FreeMarkerConfigurationFactoryBean组件。
    */
   @Bean
-  public FreeMarkerConfigurationFactoryBean freemarkerConfigurer(
+  FreeMarkerConfigurationFactoryBean freemarkerConfigurer(
       FreeMarkerProperties freemarkerProperties) {
     NoWebFreeMarkerConfigurer configurer = new NoWebFreeMarkerConfigurer();
     configurer.setFreemarkerSettings(freemarkerProperties.toProperties());

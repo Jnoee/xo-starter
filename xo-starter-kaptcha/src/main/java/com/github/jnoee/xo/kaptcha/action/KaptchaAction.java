@@ -24,8 +24,6 @@ public class KaptchaAction {
    * 
    * @param request HTTP请求
    * @param out 页面输出流
-   * @throws IOException
-   * 
    * @throws IOException 图片输出失败时抛出异常。
    */
   @RequestMapping("kaptcha-image")

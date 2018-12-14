@@ -16,7 +16,7 @@ public class PrivilegAutoConfiguration {
    * @return 返回权限管理组件。
    */
   @Bean
-  public PrivilegManager privilegManager() {
+  PrivilegManager privilegManager() {
     return new PrivilegManager();
   }
 }

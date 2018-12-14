@@ -16,7 +16,6 @@ public class AuthClientAutoConfiguration implements ShiroConfigurationAware {
   /**
    * 配置认证组件。
    * 
-   * @param authService 认证服务
    * @return 返回认证组件。
    */
   @Override

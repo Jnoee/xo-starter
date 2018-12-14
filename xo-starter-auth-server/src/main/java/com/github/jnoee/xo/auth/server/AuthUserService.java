@@ -35,6 +35,7 @@ public interface AuthUserService<U extends AuthUser> {
   /**
    * 获取当前会话认证令牌。
    * 
+   * @param <T> 认证令牌类型
    * @return 返回当前会话认证令牌。
    */
   @SuppressWarnings("unchecked")

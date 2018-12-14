@@ -10,7 +10,7 @@ import com.github.jnoee.xo.excel.ExcelFactory;
 @EnableConfigurationProperties(ExcelProperties.class)
 public class ExcelAutoConfiguration {
   @Bean
-  public ExcelFactory excelFactory() {
+  ExcelFactory excelFactory() {
     return new ExcelFactory();
   }
 }

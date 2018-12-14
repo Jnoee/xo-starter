@@ -47,6 +47,7 @@ public class ExcelFactory {
    * 
    * @param templateName 模版名称
    * @param context 数据模型
+   * @return 返回一个单工作表的Excel组件。
    */
   public Excel create(String templateName, Context context) {
     try {
@@ -72,6 +73,7 @@ public class ExcelFactory {
    * 
    * @param templateName 模版名称
    * @param model 数据模型
+   * @return 返回一个单工作表的Excel组件。
    */
   public Excel create(String templateName, Map<String, Object> model) {
     return create(templateName, new Context(model));
@@ -80,7 +82,9 @@ public class ExcelFactory {
   /**
    * 创建一个多工作表的Excel组件。
    *
+   * @param templateName 模版名称
    * @param data Excel数据
+   * @return 返回一个多工作表的Excel组件。
    */
   public Excel create(String templateName, ExcelData data) {
     Excel excel = create(templateName, data.toContext());

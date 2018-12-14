@@ -35,10 +35,11 @@ public class SwaggerAutoConfiguration {
   /**
    * 配置API接口文档支持组件。
    * 
+   * @param prop Swagger配置
    * @return 返回API接口文档支持组件。
    */
   @Bean
-  public Docket docket(SwaggerProperties prop) {
+  Docket docket(SwaggerProperties prop) {
     Docket apiDocket = new Docket(DocumentationType.SWAGGER_2);
     ApiInfo apiInfo = new ApiInfoBuilder().title(prop.getTitle()).description(prop.getDescription())
         .version(prop.getVersion()).build();
@@ -57,7 +58,7 @@ public class SwaggerAutoConfiguration {
   @Bean
   @Primary
   @ConditionalOnProperty("xo.api.doc.resources[0].url")
-  public SwaggerResourcesProvider provider(SwaggerProperties prop) {
+  SwaggerResourcesProvider provider(SwaggerProperties prop) {
     return prop::getResources;
   }
 
