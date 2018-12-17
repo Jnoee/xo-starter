@@ -1,0 +1,91 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>xo-starter</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	
+	<name>xo-starter</name>
+	<description>xo-starter</description>
+	<url>https://github.com/Jnoee/xo-starter</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>jnoee</name>
+			<email>jnoee.he@gmail.com</email>
+		</developer>
+	</developers>
+
+	<parent>
+		<groupId>com.github.jnoee</groupId>
+		<artifactId>xo-dependencies</artifactId>
+		<version>1.0.5</version>
+	</parent>
+
+	<scm>
+		<url>https://github.com/Jnoee/xo-starter</url>
+		<connection>scm:git:https://github.com/Jnoee/xo-starter.git</connection>
+		<developerConnection>scm:git:https://github.com/Jnoee/xo-starter.git</developerConnection>
+	</scm>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<modules>
+		<module>xo-starter-base</module>
+		<module>xo-starter-cache</module>
+		<module>xo-starter-fastdfs</module>
+		<module>xo-starter-swagger</module>
+		<module>xo-starter-web</module>
+		<module>xo-starter-xss</module>
+		<module>xo-starter-privileg</module>
+		<module>xo-starter-kaptcha</module>
+		<module>xo-starter-auth</module>
+		<module>xo-starter-auth-server</module>
+		<module>xo-starter-auth-client</module>
+		<module>xo-starter-auth-feign</module>
+		<module>xo-starter-freemarker</module>
+		<module>xo-starter-mail</module>
+		<module>xo-starter-jpa</module>
+		<module>xo-starter-jpa-search</module>
+		<module>xo-starter-jpa-audit</module>
+		<module>xo-starter-ienum</module>
+		<module>xo-starter-mvc</module>
+		<module>xo-starter-dwz</module>
+		<module>xo-starter-pay</module>
+		<module>xo-starter-excel</module>
+		<module>xo-starter-word</module>
+	</modules>
+</project>

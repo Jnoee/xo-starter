@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.github.jnoee.xo.jpa.config.JpaAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.github.jnoee.xo.jpa.config.JpaEnvironmentPostProcessor,com.github.jnoee.xo.jpa.config.DruidEnvironmentPostProcessor
