@@ -1,5 +1,6 @@
 package com.github.jnoee.xo.freemarker;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,16 +10,21 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.ui.freemarker.SpringTemplateLoader;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
+import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModelException;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * web环境下的FreeMarker配置组件。
  */
+@Slf4j
 public class WebFreeMarkerConfigurer extends FreeMarkerConfigurer
     implements GenericFreeMarkerConfigurer {
   private ServletContext servletContext;
@@ -55,6 +61,22 @@ public class WebFreeMarkerConfigurer extends FreeMarkerConfigurer
     super.postProcessTemplateLoaders(templateLoaders);
     for (String templatePath : getTemplatePaths()) {
       templateLoaders.add(getTemplateLoaderForPath(templatePath));
+      log.debug("加载模版路径[{}]。", templatePath);
+    }
+  }
+
+  @Override
+  protected TemplateLoader getTemplateLoaderForPath(String templateLoaderPath) {
+    if (isPreferFileSystemAccess()) {
+      try {
+        Resource path = getResourceLoader().getResource(templateLoaderPath);
+        File file = path.getFile();
+        return new FileTemplateLoader(file);
+      } catch (IOException ex) {
+        return new SpringTemplateLoader(getResourceLoader(), templateLoaderPath);
+      }
+    } else {
+      return new SpringTemplateLoader(getResourceLoader(), templateLoaderPath);
     }
   }
 
