@@ -66,7 +66,7 @@ public class BeanUtils {
       field.setAccessible(true);
       Object result = field.get(target);
       field.setAccessible(accessible);
-      return processHibernateLazyField(result);
+      return processHibernateLazyObject(result);
     } catch (Exception e) {
       throw new SysException("获取对象的属性[" + field.getName() + "]值失败", e);
     }
@@ -191,6 +191,8 @@ public class BeanUtils {
   public static void copyFields(Object source, Object target, String includeFields,
       String excludeFields) {
     checkSourceAndTarget(source, target);
+    // 如果源对象是懒加载对象，先处理成非懒加载
+    source = processHibernateLazyObject(source);
     String[] includeFieldNames = new String[] {};
     if (!StringUtils.isBlank(includeFields)) {
       includeFieldNames = includeFields.split(",");
@@ -199,7 +201,8 @@ public class BeanUtils {
     if (!StringUtils.isBlank(excludeFields)) {
       excludeFieldNames = excludeFields.split(",");
     }
-    for (Field field : getAllDeclaredField(source.getClass(), excludeFieldNames)) {
+    List<Field> fields = getAllDeclaredField(source.getClass(), excludeFieldNames);
+    for (Field field : fields) {
       if (CollectionUtils.contains(includeFieldNames, field.getName())) {
         copyField(source, target, field.getName(), true);
       } else {
@@ -220,7 +223,7 @@ public class BeanUtils {
   public static void copyField(Object source, Object target, String fieldName,
       Boolean containedNull) {
     // 如果源对象是懒加载对象，先处理成非懒加载
-    source = processHibernateLazyField(source);
+    source = processHibernateLazyObject(source);
     Object sourceFieldValue = getField(source, fieldName);
     Boolean needCopy = isFieldNeedCopy(source, target, fieldName);
     if (sourceFieldValue == null && !containedNull) {
@@ -448,24 +451,24 @@ public class BeanUtils {
   }
 
   /**
-   * 处理Hibernate懒加载属性。
+   * 处理Hibernate懒加载对象。
    * 
-   * @param fieldValue 属性值
-   * @return 如果是Hibernate懒加载属性则执行代理方法返回实际的属性对象，否则直接返回。
+   * @param lazyObject 懒加载对象
+   * @return 如果是Hibernate懒加载对象则执行代理方法返回实际对象，否则直接返回。
    */
-  private static Object processHibernateLazyField(Object fieldValue) {
+  private static Object processHibernateLazyObject(Object lazyObject) {
     try {
       Class<?> hibernateProxyClass = Class.forName("org.hibernate.proxy.HibernateProxy");
-      if (hibernateProxyClass.isAssignableFrom(fieldValue.getClass())) {
-        Method method = fieldValue.getClass().getMethod("getHibernateLazyInitializer");
-        Object lazyInitializer = method.invoke(fieldValue);
+      if (hibernateProxyClass.isAssignableFrom(lazyObject.getClass())) {
+        Method method = lazyObject.getClass().getMethod("getHibernateLazyInitializer");
+        Object lazyInitializer = method.invoke(lazyObject);
         method = lazyInitializer.getClass().getMethod("getImplementation");
         return method.invoke(lazyInitializer);
       } else {
-        return fieldValue;
+        return lazyObject;
       }
     } catch (Exception e) {
-      return fieldValue;
+      return lazyObject;
     }
   }
 
