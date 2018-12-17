@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.Column;
 
-import org.hibernate.HibernateException;
 import org.hibernate.annotations.Type;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.internal.util.compare.EqualsHelper;
@@ -73,7 +72,6 @@ public abstract class AbstractUserType implements UserType {
    * @param name 字段名
    * @param session SessionImplementor
    * @return 返回指定字段的值。
-   * @throws HibernateException 当发生Hibernate操作异常时抛出
    * @throws SQLException 当发生SQL异常时抛出
    */
   protected String getValue(ResultSet rs, String name, SharedSessionContractImplementor session)
@@ -88,7 +86,6 @@ public abstract class AbstractUserType implements UserType {
    * @param value 字段值
    * @param index 字段序号
    * @param session SessionImplementor
-   * @throws HibernateException 当发生Hibernate操作异常时抛出
    * @throws SQLException 当发生SQL异常时抛出
    */
   protected void setValue(PreparedStatement st, String value, int index,
