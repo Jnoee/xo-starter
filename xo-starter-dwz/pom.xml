@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.github.jnoee</groupId>
 		<artifactId>xo-starter</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>xo-starter-dwz</artifactId>
 	<dependencies>
