@@ -87,5 +87,6 @@
 		<module>xo-starter-pay</module>
 		<module>xo-starter-excel</module>
 		<module>xo-starter-word</module>
+		<module>xo-starter-banner</module>
 	</modules>
 </project>
