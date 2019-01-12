@@ -13,13 +13,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.jnoee.xo.fastdfs.FastFileClient;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(classes = TestApplication.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = TestApplication.class)
 public class FastFileClientTest {
   @Autowired
   private FastFileClient client;
 
-//  @Test
+  @Test
   public void testUploadFile() throws Exception {
     MockMultipartFile file = new MockMultipartFile("data", "filename.txt", "text/plain",
         "fastdfs test content".getBytes());
