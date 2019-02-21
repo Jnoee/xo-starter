@@ -99,7 +99,7 @@ public class BizLogService {
    * @return 返回指定ID的日志记录。
    */
   @Transactional(readOnly = true)
-  public BizLog getLog(String logId) {
+  public BizLog getLog(Long logId) {
     return bizLogDao.get(logId);
   }
 

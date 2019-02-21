@@ -22,7 +22,7 @@ import com.github.jnoee.xo.exception.SysException;
 import com.github.jnoee.xo.jpa.audit.annotation.LogBean;
 import com.github.jnoee.xo.jpa.audit.annotation.LogField;
 import com.github.jnoee.xo.jpa.audit.model.LogData;
-import com.github.jnoee.xo.jpa.entity.UuidEntity;
+import com.github.jnoee.xo.jpa.entity.IdEntity;
 import com.github.jnoee.xo.utils.BeanUtils;
 import com.github.jnoee.xo.utils.DateUtils;
 import com.github.jnoee.xo.utils.StringUtils;
@@ -38,7 +38,7 @@ import lombok.Setter;
 @Table(name = "BizLog")
 @Getter
 @Setter
-public class BizLog extends UuidEntity {
+public class BizLog extends IdEntity {
   /** 操作人 */
   @Field(analyze = Analyze.NO)
   private String operator;

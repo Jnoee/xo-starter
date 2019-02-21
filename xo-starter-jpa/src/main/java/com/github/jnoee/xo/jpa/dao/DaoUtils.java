@@ -1,5 +1,7 @@
 package com.github.jnoee.xo.jpa.dao;
 
+import java.io.Serializable;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -17,7 +19,7 @@ public class DaoUtils implements ApplicationContextAware {
    * @param id 实体ID
    * @return 返回对应的UuidEntity对象。
    */
-  public static <T> T getEntity(Class<T> entityClass, String id) {
+  public static <T> T getEntity(Class<T> entityClass, Serializable id) {
     return getDao(entityClass).get(id);
   }
 
