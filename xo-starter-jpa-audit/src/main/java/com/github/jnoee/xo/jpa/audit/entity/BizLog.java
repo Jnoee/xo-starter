@@ -1,22 +1,5 @@
 package com.github.jnoee.xo.jpa.audit.entity;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.SortableField;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jnoee.xo.exception.SysException;
 import com.github.jnoee.xo.jpa.audit.annotation.LogBean;
@@ -26,16 +9,26 @@ import com.github.jnoee.xo.jpa.entity.UuidEntity;
 import com.github.jnoee.xo.utils.BeanUtils;
 import com.github.jnoee.xo.utils.DateUtils;
 import com.github.jnoee.xo.utils.StringUtils;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.SortableField;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * 业务日志。
  */
 @Indexed
 @Entity
-@Table(name = "BizLog")
+@Table(name = "biz_log")
 @Getter
 @Setter
 public class BizLog extends UuidEntity {
