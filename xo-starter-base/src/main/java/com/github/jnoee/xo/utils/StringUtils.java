@@ -1,7 +1,12 @@
 package com.github.jnoee.xo.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -183,6 +188,81 @@ public class StringUtils {
     } catch (UnsupportedEncodingException e) {
       throw new SysException("对字符串进行字符集转换时发生异常", e);
     }
+  }
+
+  /**
+   * 将固定格式的字符串转换成一个字符数组。
+   * 
+   * @param strs 字符串
+   * @return 返回一个字符数组。
+   */
+  public static String[] stringToArray(String strs) {
+    String[] result = new String[0];
+    if (isNotBlank(strs)) {
+      result = strs.split(",");
+    }
+    return result;
+  }
+
+  /**
+   * 将字符数组转换成一个固定格式的字符串。
+   * 
+   * @param array 字符数组
+   * @return 返回固定格式的字符串。
+   */
+  public static String arrayToString(String[] array) {
+    return join(array, ",");
+  }
+
+  /**
+   * 将固定格式的字符串转换成一个字符列表。
+   * 
+   * @param strs 字符串
+   * @return 返回一个字符列表。
+   */
+  public static List<String> stringToList(String strs) {
+    return CollectionUtils.toList(stringToArray(strs));
+  }
+
+  /**
+   * 将字符列表转换成一个固定格式的字符串。
+   * 
+   * @param list 字符列表
+   * @return 返回固定格式的字符串。
+   */
+  public static String listToString(List<String> list) {
+    return join(list, ",");
+  }
+
+  /**
+   * 将固定格式的字符串转换成一个Map。
+   * 
+   * @param strs 字符串
+   * @return 返回一个Map。
+   */
+  public static Map<String, String> stringToMap(String strs) {
+    Map<String, String> result = new LinkedHashMap<>();
+    if (isNotBlank(strs)) {
+      for (String value : strs.split(",")) {
+        String[] tmpStrs = value.split(":");
+        result.put(tmpStrs[0], tmpStrs[1]);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 将一个Map转换成固定格式的字符串。
+   * 
+   * @param map Map
+   * @return 返回固定格式的字符串。
+   */
+  public static String mapToString(Map<String, String> map) {
+    List<String> result = new ArrayList<>();
+    for (Entry<String, String> entry : map.entrySet()) {
+      result.add(entry.getKey() + ":" + entry.getValue());
+    }
+    return join(result, ",");
   }
 
   /**
