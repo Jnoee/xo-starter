@@ -1,36 +1,25 @@
 package com.github.jnoee.xo.jpa.dao;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.List;
-
-import javax.persistence.Cache;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.FlushModeType;
-import javax.persistence.Id;
-import javax.persistence.LockModeType;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
-import org.hibernate.proxy.HibernateProxy;
-import org.hibernate.query.Query;
-
 import com.github.jnoee.xo.jpa.query.Criteria;
 import com.github.jnoee.xo.model.Page;
 import com.github.jnoee.xo.model.PageQuery;
 import com.github.jnoee.xo.utils.BeanUtils;
 import com.github.jnoee.xo.utils.CollectionUtils;
 import com.github.jnoee.xo.utils.StringUtils;
-
 import lombok.Getter;
+import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.query.Query;
+
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * 泛型Dao。
- * 
+ *
  * @param <E> 业务实体类型
  */
 public class Dao<E> {
@@ -41,7 +30,7 @@ public class Dao<E> {
 
   /**
    * 构造方法。
-   * 
+   *
    * @param entityClass 业务实体类
    */
   public Dao(Class<E> entityClass) {
@@ -50,7 +39,7 @@ public class Dao<E> {
 
   /**
    * 获取EntityManagerFactory。
-   * 
+   *
    * @return 返回EntityManagerFactory。
    */
   public EntityManagerFactory getEntityManagerFactory() {
@@ -59,7 +48,7 @@ public class Dao<E> {
 
   /**
    * 获取CriteriaBuilder。
-   * 
+   *
    * @return 返回CriteriaBuilder。
    */
   public CriteriaBuilder getCriteriaBuilder() {
@@ -68,7 +57,7 @@ public class Dao<E> {
 
   /**
    * 创建TypedQuery。
-   * 
+   *
    * @param jpql JPQL语句
    * @param values 参数值
    * @return 返回TypedQuery。
@@ -83,7 +72,7 @@ public class Dao<E> {
 
   /**
    * 创建Criteria。
-   * 
+   *
    * @return 返回Criteria。
    */
   public Criteria<E> createCriteria() {
@@ -92,7 +81,7 @@ public class Dao<E> {
 
   /**
    * 加载指定ID的业务实体。
-   * 
+   *
    * @param id 实体ID
    * @return 返回指定ID的业务实体，如果不存在抛出异常。
    */
@@ -102,7 +91,7 @@ public class Dao<E> {
 
   /**
    * 获取指定ID的业务实体。
-   * 
+   *
    * @param id 实体ID
    * @return 返回指定ID的业务实体，如果没有找到则返回null。
    */
@@ -112,7 +101,7 @@ public class Dao<E> {
 
   /**
    * 获取指定ID的业务实体。
-   * 
+   *
    * @param id 实体ID
    * @param lockMode 锁定模式
    * @return 返回指定ID的业务实体，如果没有找到则返回null。
@@ -129,7 +118,7 @@ public class Dao<E> {
 
   /**
    * 保存业务实体。
-   * 
+   *
    * @param entity 业务实体
    */
   public void save(E entity) {
@@ -138,7 +127,7 @@ public class Dao<E> {
 
   /**
    * 更新业务实体。
-   * 
+   *
    * @param entity 业务实体
    * @return 返回更新后的业务实体（持久状态的）。
    */
@@ -148,7 +137,7 @@ public class Dao<E> {
 
   /**
    * 强制更新业务实体。
-   * 
+   *
    * @param entity 业务实体
    */
   public void forceMerge(E entity) {
@@ -158,7 +147,7 @@ public class Dao<E> {
 
   /**
    * 清理业务实体。
-   * 
+   *
    * @param entity 业务实体
    */
   public void detach(E entity) {
@@ -167,7 +156,7 @@ public class Dao<E> {
 
   /**
    * 删除业务实体。
-   * 
+   *
    * @param entity 业务实体
    */
   public void remove(E entity) {
@@ -176,7 +165,7 @@ public class Dao<E> {
 
   /**
    * 删除多个业务实体。
-   * 
+   *
    * @param entitys 业务实体列表
    */
   public void remove(List<E> entitys) {
@@ -187,7 +176,7 @@ public class Dao<E> {
 
   /**
    * 删除指定ID的业务实体。
-   * 
+   *
    * @param id 业务实体ID
    */
   public void remove(Serializable id) {
@@ -196,7 +185,7 @@ public class Dao<E> {
 
   /**
    * 删除多个指定ID的业务实体。
-   * 
+   *
    * @param ids 业务实体ID数组
    */
   public void remove(Serializable[] ids) {
@@ -207,7 +196,7 @@ public class Dao<E> {
 
   /**
    * 根据属性批量删除业务实体。
-   * 
+   *
    * @param name 属性名
    * @param value 属性值
    */
@@ -219,7 +208,7 @@ public class Dao<E> {
 
   /**
    * 获取所有业务实体。
-   * 
+   *
    * @return 返回指定类型的所有业务实体。
    */
   public List<E> getAll() {
@@ -229,7 +218,7 @@ public class Dao<E> {
 
   /**
    * 获取所有业务实体并进行排序。
-   * 
+   *
    * @param orderBy 排序的属性名
    * @param isAsc 是否升序
    * @return 返回排序后的指定类型的所有业务实体。
@@ -246,7 +235,7 @@ public class Dao<E> {
 
   /**
    * 根据属性的值查找业务实体。
-   * 
+   *
    * @param name 属性名
    * @param value 属性值
    * @return 返回属性值相符的业务实体集合，如果没有找到返回一个空的集合。
@@ -263,7 +252,7 @@ public class Dao<E> {
 
   /**
    * 根据属性的值查找业务实体并进行排序。
-   * 
+   *
    * @param name 属性名
    * @param value 属性值
    * @param orderBy 排序属性
@@ -287,7 +276,7 @@ public class Dao<E> {
 
   /**
    * 判断是否存在属性重复的业务实体。
-   * 
+   *
    * @param entity 待判断的业务实体
    * @param names 属性名
    * @return 如果存在重复的业务实体返回false，否则返回true。
@@ -301,12 +290,12 @@ public class Dao<E> {
     if (id != null) {
       criteria.notEq(getIdName(), id);
     }
-    return criteria.count() == 0;
+    return criteria.toTypedQuery().setMaxResults(1).getSingleResult() == null;
   }
 
   /**
    * 根据属性的值查找唯一的业务实体。
-   * 
+   *
    * @param name 属性名
    * @param value 属性值
    * @return 返回指定唯一的业务实体，如果没有找到则返回null。
@@ -321,7 +310,7 @@ public class Dao<E> {
       // 用于解决spring-data-jpa的审计功能bug
       // 可参考：http://forum.spring.io/forum/spring-projects/data/106312-spring-data-jpa-infinite-loop-when-updating-but-not-saving-an-auditable-object
       query.setFlushMode(FlushModeType.COMMIT);
-      return query.getSingleResult();
+      return query.setMaxResults(1).getSingleResult();
     } catch (NoResultException e) {
       return null;
     }
@@ -329,7 +318,7 @@ public class Dao<E> {
 
   /**
    * 执行count查询获得记录总数。
-   * 
+   *
    * @return 返回记录总数。
    */
   public Integer count() {
@@ -339,7 +328,7 @@ public class Dao<E> {
 
   /**
    * 根据JPQL查询语句进行分页查询。
-   * 
+   *
    * @param jpql JPQL查询语句
    * @param pageNum 待获取的页数
    * @param pageSize 每页的记录数
@@ -363,7 +352,7 @@ public class Dao<E> {
 
   /**
    * 根据查询条件进行分页查询。
-   * 
+   *
    * @param query TypedQuery
    * @param pageNum 待获取的页数
    * @param pageSize 每页的记录数
@@ -376,7 +365,7 @@ public class Dao<E> {
 
   /**
    * 根据查询条件进行分页查询。
-   * 
+   *
    * @param criteriaQuery CriteriaQuery
    * @param pageNum 待获取的页数
    * @param pageSize 每页的记录数
@@ -389,7 +378,7 @@ public class Dao<E> {
 
   /**
    * 根据查询条件进行分页查询。
-   * 
+   *
    * @param criteria 查询条件
    * @param pageNum 待获取的页数
    * @param pageSize 每页的记录数
@@ -409,7 +398,7 @@ public class Dao<E> {
 
   /**
    * 根据查询条件进行分页查询。
-   * 
+   *
    * @param criteria 查询条件
    * @param pageQuery 搜索模型
    * @param likeFields 模糊查询字段
@@ -426,7 +415,7 @@ public class Dao<E> {
   /**
    * 获取查询所能获得的对象总数。<br>
    * 本函数只能自动处理简单的JPQL语句,复杂的JPQL查询请另行编写count语句查询。
-   * 
+   *
    * @param jpql 查询语句
    * @param values 查询参数
    * @return 返回查询结果总数。
@@ -444,7 +433,7 @@ public class Dao<E> {
 
   /**
    * 获取业务实体的缓存对象。
-   * 
+   *
    * @return 返回业务实体的缓存对象。
    */
   public Cache getCache() {
@@ -460,7 +449,7 @@ public class Dao<E> {
 
   /**
    * 清理指定ID的业务实体缓存。
-   * 
+   *
    * @param id 业务实体ID
    */
   public void evictCache(Serializable id) {
@@ -469,7 +458,7 @@ public class Dao<E> {
 
   /**
    * 获取实体类的主键值。
-   * 
+   *
    * @param entity 业务实体
    * @return 返回实体类的主键值。
    */
@@ -479,7 +468,7 @@ public class Dao<E> {
 
   /**
    * 获取实体类的主键名。
-   * 
+   *
    * @return 返回实体类的主键名。
    */
   private String getIdName() {
