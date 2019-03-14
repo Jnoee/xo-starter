@@ -290,7 +290,7 @@ public class Dao<E> {
     if (id != null) {
       criteria.notEq(getIdName(), id);
     }
-    return criteria.toTypedQuery().setMaxResults(1).getSingleResult() == null;
+    return criteria.toTypedQuery().setMaxResults(1).getResultList().isEmpty();
   }
 
   /**
@@ -310,7 +310,8 @@ public class Dao<E> {
       // 用于解决spring-data-jpa的审计功能bug
       // 可参考：http://forum.spring.io/forum/spring-projects/data/106312-spring-data-jpa-infinite-loop-when-updating-but-not-saving-an-auditable-object
       query.setFlushMode(FlushModeType.COMMIT);
-      return query.setMaxResults(1).getSingleResult();
+      List<E> list = query.setMaxResults(1).getResultList();
+      return list.isEmpty() ? null : list.get(0);
     } catch (NoResultException e) {
       return null;
     }
