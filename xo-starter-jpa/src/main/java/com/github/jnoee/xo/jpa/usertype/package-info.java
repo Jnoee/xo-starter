@@ -1,6 +1,6 @@
 @TypeDefs(value = {@TypeDef(name = "Json", typeClass = JsonUserType.class),
     @TypeDef(name = "JsonList", typeClass = JsonListUserType.class),
-    @TypeDef(name = "UuidEntity", typeClass = UuidEntityUserType.class),
+    @TypeDef(name = "IdEntityList", typeClass = IdEntityListUserType.class),
     @TypeDef(name = "UuidEntityList", typeClass = UuidEntityListUserType.class)})
 package com.github.jnoee.xo.jpa.usertype;
 

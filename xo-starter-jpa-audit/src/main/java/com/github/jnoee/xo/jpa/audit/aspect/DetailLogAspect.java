@@ -1,5 +1,6 @@
 package com.github.jnoee.xo.jpa.audit.aspect;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -12,7 +13,6 @@ import com.github.jnoee.xo.jpa.audit.entity.BizLog;
 import com.github.jnoee.xo.jpa.dao.DaoUtils;
 import com.github.jnoee.xo.utils.AspectUtils;
 import com.github.jnoee.xo.utils.BeanUtils;
-import com.github.jnoee.xo.utils.StringUtils;
 
 /**
  * 详细业务日志切面。
@@ -66,7 +66,8 @@ public class DetailLogAspect extends AbstractLogAspect {
    */
   private Object processAll(BizLog bizLog, Object target, ProceedingJoinPoint joinPoint)
       throws Throwable {
-    bizLog.setEntityId(getEntityId(target));
+    Serializable entityId = getEntityId(target);
+    bizLog.setEntityId(entityId == null ? null : entityId.toString());
     bizLog.setOrigData(target);
     Object result = joinPoint.proceed();
     target = getEntity(target);
@@ -85,7 +86,8 @@ public class DetailLogAspect extends AbstractLogAspect {
    */
   private Object processOrig(BizLog bizLog, Object target, ProceedingJoinPoint joinPoint)
       throws Throwable {
-    bizLog.setEntityId(getEntityId(target));
+    Serializable entityId = getEntityId(target);
+    bizLog.setEntityId(entityId == null ? null : entityId.toString());
     bizLog.setOrigData(target);
     return joinPoint.proceed();
   }
@@ -102,7 +104,8 @@ public class DetailLogAspect extends AbstractLogAspect {
   private Object processNew(BizLog bizLog, Object target, ProceedingJoinPoint joinPoint)
       throws Throwable {
     Object result = joinPoint.proceed();
-    bizLog.setEntityId(getEntityId(target));
+    Serializable entityId = getEntityId(target);
+    bizLog.setEntityId(entityId == null ? null : entityId.toString());
     bizLog.setNewData(target);
     return result;
   }
@@ -114,8 +117,8 @@ public class DetailLogAspect extends AbstractLogAspect {
    * @return 如果目标对象是UuidEntity返回对应的业务实体，否则返回原目标对象。
    */
   private Object getEntity(Object target) {
-    String entityId = getEntityId(target);
-    if (StringUtils.isNotBlank(entityId)) {
+    Serializable entityId = getEntityId(target);
+    if (entityId != null) {
       return DaoUtils.getEntity(target.getClass(), entityId);
     }
     return target;
@@ -127,11 +130,11 @@ public class DetailLogAspect extends AbstractLogAspect {
    * @param target 日志目标对象
    * @return 返回业务实体ID。
    */
-  private String getEntityId(Object target) {
+  private Serializable getEntityId(Object target) {
     Field idField = BeanUtils.findField(target.getClass(), "id");
     if (idField != null) {
       Object idValue = BeanUtils.getField(target, idField);
-      return idValue != null ? idValue.toString() : null;
+      return idValue != null ? (Serializable) idValue : null;
     } else {
       return null;
     }

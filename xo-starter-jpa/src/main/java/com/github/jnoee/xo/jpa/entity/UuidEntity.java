@@ -12,7 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * UUID实体基类
+ * 基于UUID主键的实体基类。
  */
 @MappedSuperclass
 @Getter
