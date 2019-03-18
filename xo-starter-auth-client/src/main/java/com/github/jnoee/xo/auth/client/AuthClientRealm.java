@@ -21,14 +21,13 @@ public class AuthClientRealm extends AuthorizingRealm {
 
   @Override
   protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
-    return new SimpleAuthenticationInfo(token, token.getCredentials(), getName());
+    return new SimpleAuthenticationInfo(token.getPrincipal(), token.getCredentials(), getName());
   }
 
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
     AuthToken authToken = (AuthToken) principals.getPrimaryPrincipal();
     SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-    info.addRoles(authToken.getRoles());
     info.addStringPermissions(authToken.getPrivilegs());
     return info;
   }

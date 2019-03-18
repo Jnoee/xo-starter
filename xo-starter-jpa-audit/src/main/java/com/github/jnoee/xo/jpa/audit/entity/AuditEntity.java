@@ -17,7 +17,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.github.jnoee.xo.auth.server.AuthUser;
-import com.github.jnoee.xo.jpa.entity.IdEntity;
+import com.github.jnoee.xo.jpa.entity.UuidEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AuditEntity<U extends AuthUser> extends IdEntity {
+public abstract class AuditEntity<U extends AuthUser> extends UuidEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "createUserId")
   @CreatedBy
