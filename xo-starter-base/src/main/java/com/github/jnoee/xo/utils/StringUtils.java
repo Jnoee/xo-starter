@@ -1,5 +1,7 @@
 package com.github.jnoee.xo.utils;
 
+import com.github.jnoee.xo.exception.SysException;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,15 +12,34 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.github.jnoee.xo.exception.SysException;
-
 /**
  * 字符串工具类。
  */
 public class StringUtils {
+
+  /**
+   * 判断一个字符串是否为null或者""，如果是返回other,否则返回原值
+   * @param value 欲判断的字符串
+   * @param other 用于替换的字符串
+   * @return 判断一个字符串是否为null或者""，如果是返回other,否则返回原值
+   */
+  public static String emptyThen(String value, String other) {
+    return isEmpty(value) ? other : value;
+  }
+
+  /**
+   * 判断一个字符串是否为null或者""，如果是返回other,否则返回原值
+   * @param value 欲判断的字符串
+   * @param other 用于替换的字符串
+   * @return 判断一个字符串是否为null或者""，如果是返回other,否则返回原值
+   */
+  public static String blankThen(String value, String other) {
+    return isBlank(value) ? other : value;
+  }
+
   /**
    * 判断指定字符串是否为空。
-   * 
+   *
    * @param str 待判断的字符串
    * @return 返回指定字符串是否为空。
    */
@@ -28,7 +49,7 @@ public class StringUtils {
 
   /**
    * 判断指定字符串是否不为空。
-   * 
+   *
    * @param str 待判断的字符串
    * @return 返回指定字符串是否不为空。
    */
@@ -38,7 +59,7 @@ public class StringUtils {
 
   /**
    * 判断指定字符串是否为空字符串。
-   * 
+   *
    * @param str 待判断的字符串
    * @return 返回指定字符串是否为空字符串。
    */
@@ -52,7 +73,7 @@ public class StringUtils {
 
   /**
    * 判断指定字符串是否不为空字符串。
-   * 
+   *
    * @param str 待判断的字符串
    * @return 返回指定字符串是否不为空字符串。
    */
@@ -62,8 +83,8 @@ public class StringUtils {
 
   /**
    * 截取指定分隔符前的字符串内容。
-   * 
-   * @param str 待截取的字符串
+   *
+   * @param str       待截取的字符串
    * @param separator 分隔符
    * @return 返回指定分隔符前的字符串内容。
    */
@@ -77,8 +98,8 @@ public class StringUtils {
 
   /**
    * 截取最后一个分隔符前的字符串内容。
-   * 
-   * @param str 待截取的字符串
+   *
+   * @param str       待截取的字符串
    * @param separator 分隔符
    * @return 返回最后一个分隔符前的字符串内容。
    */
@@ -92,8 +113,8 @@ public class StringUtils {
 
   /**
    * 截取指定分隔符后的字符串内容。
-   * 
-   * @param str 待截取的字符串
+   *
+   * @param str       待截取的字符串
    * @param separator 分隔符
    * @return 返回指定分隔符后的字符串内容。
    */
@@ -107,8 +128,8 @@ public class StringUtils {
 
   /**
    * 截取最后一个分隔符后的字符串内容。
-   * 
-   * @param str 待截取的字符串
+   *
+   * @param str       待截取的字符串
    * @param separator 分隔符
    * @return 返回最后一个分隔符后的字符串内容。
    */
@@ -122,10 +143,10 @@ public class StringUtils {
 
   /**
    * 截取两个分隔符之间的字符串。
-   * 
-   * @param str 待截取的字符串
+   *
+   * @param str            待截取的字符串
    * @param startSeparator 开始分隔符
-   * @param endSeparator 结束分隔符
+   * @param endSeparator   结束分隔符
    * @return 返回两个分隔符之间的字符串。
    */
   public static String substringBetween(String str, String startSeparator, String endSeparator) {
@@ -139,7 +160,7 @@ public class StringUtils {
 
   /**
    * 截取指定起始位置和截取长度的字符串。
-   * 
+   *
    * @param str 待截取的字符串
    * @param pos 起始位置
    * @param len 截取长度
@@ -154,8 +175,8 @@ public class StringUtils {
 
   /**
    * 将一个字符串数组用指定分隔符串联起来。
-   * 
-   * @param strs 字符串数组
+   *
+   * @param strs      字符串数组
    * @param separator 分隔符
    * @return 返回串联起来的字符串。
    */
@@ -165,19 +186,19 @@ public class StringUtils {
 
   /**
    * 将一个字符串列表用指定分隔符串联起来。
-   * 
-   * @param strs 字符串数组
+   *
+   * @param strs      字符串数组
    * @param separator 分隔符
    * @return 返回串联起来的字符串数组。
    */
   public static String join(Collection<String> strs, String separator) {
-    return join(strs.toArray(new String[] {}), separator);
+    return join(strs.toArray(new String[]{}), separator);
   }
 
   /**
    * 对字符串进行字符集转换。
-   * 
-   * @param str 字符串
+   *
+   * @param str          字符串
    * @param origEncoding 原字符集编码
    * @param destEncoding 新字符集编码
    * @return 返回转换后的字符串。
@@ -268,5 +289,6 @@ public class StringUtils {
   /**
    * 私有构造方法。
    */
-  private StringUtils() {}
+  private StringUtils() {
+  }
 }
