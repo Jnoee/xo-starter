@@ -5,9 +5,6 @@ import java.util.List;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
-import com.github.jnoee.xo.utils.CollectionUtils;
-import com.github.jnoee.xo.utils.StringUtils;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,15 +23,6 @@ public class AuthToken implements AuthenticationToken {
   private String username;
   /** 权限列表 */
   private List<String> privilegs = new ArrayList<>();
-
-  public List<String> getRoles() {
-    List<String> roles = new ArrayList<>();
-    for (String privileg : privilegs) {
-      roles.add(StringUtils.substringBefore(privileg, ":"));
-    }
-    CollectionUtils.distinct(roles);
-    return roles;
-  }
 
   @Override
   public Object getPrincipal() {

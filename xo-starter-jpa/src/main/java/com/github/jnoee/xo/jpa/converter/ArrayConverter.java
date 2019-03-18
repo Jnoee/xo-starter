@@ -9,11 +9,11 @@ import com.github.jnoee.xo.utils.StringUtils;
 public class ArrayConverter implements AttributeConverter<String[], String> {
   @Override
   public String convertToDatabaseColumn(String[] attribute) {
-    return StringUtils.arrayToString(attribute);
+    return StringUtils.join(attribute, ",");
   }
 
   @Override
   public String[] convertToEntityAttribute(String dbData) {
-    return StringUtils.stringToArray(dbData);
+    return dbData.split(",");
   }
 }
