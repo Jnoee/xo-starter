@@ -210,11 +210,13 @@ public class Dao<E> {
    * 
    * @param name 属性名
    * @param value 属性值
+   * @return 返回删除记录数。
    */
-  public void removeBy(String name, Object value) {
-    TypedQuery<E> query =
-        createQuery("delete from " + entityClass.getName() + " where " + name + "= ?", value);
-    query.executeUpdate();
+  public Integer removeBy(String name, Object value) {
+    javax.persistence.Query query = entityManager
+        .createQuery("delete from " + entityClass.getName() + " where " + name + "= :value");
+    query.setParameter("value", value);
+    return query.executeUpdate();
   }
 
   /**
