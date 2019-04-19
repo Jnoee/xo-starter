@@ -34,7 +34,7 @@ public class FastFileClient {
    * @return 文件路径
    */
   public String uploadFile(File file) {
-    return uploadFile(file, null);
+    return uploadFile(file, new HashMap<String, String>());
   }
 
   /**
@@ -61,7 +61,7 @@ public class FastFileClient {
    * @return 文件路径
    */
   public String uploadFile(MultipartFile file) {
-    return uploadFile(file, null);
+    return uploadFile(file, new HashMap<String, String>());
   }
 
   /**
