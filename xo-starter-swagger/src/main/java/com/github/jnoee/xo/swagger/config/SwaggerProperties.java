@@ -18,5 +18,6 @@ public class SwaggerProperties {
   private String description;
   private String version;
   private String basePackage;
+  private String tokenName = "x-auth-token";
   private List<SwaggerResource> resources = new ArrayList<>();
 }
