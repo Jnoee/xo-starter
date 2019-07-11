@@ -66,7 +66,7 @@
 	<modules>
 		<module>xo-starter-base</module>
 		<module>xo-starter-cache</module>
-		<module>xo-starter-fastdfs</module>
+		<module>xo-starter-dfs</module>
 		<module>xo-starter-swagger</module>
 		<module>xo-starter-web</module>
 		<module>xo-starter-xss</module>
