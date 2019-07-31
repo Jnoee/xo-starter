@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>com.github.jnoee</groupId>
 		<artifactId>xo-starter</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>xo-starter-jpa-audit</artifactId>
 	<dependencies>
