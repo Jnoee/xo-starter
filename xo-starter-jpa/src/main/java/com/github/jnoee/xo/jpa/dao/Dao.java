@@ -210,11 +210,13 @@ public class Dao<E> {
    * 
    * @param name 属性名
    * @param value 属性值
+   * @return 返回删除记录数。
    */
-  public void removeBy(String name, Object value) {
-    TypedQuery<E> query =
-        createQuery("delete from " + entityClass.getName() + " where " + name + "= ?", value);
-    query.executeUpdate();
+  public Integer removeBy(String name, Object value) {
+    String sql = String.format("delete from %s where %s = :value", entityClass.getName(), name);
+    javax.persistence.Query query = entityManager.createQuery(sql);
+    query.setParameter("value", value);
+    return query.executeUpdate();
   }
 
   /**
@@ -258,7 +260,7 @@ public class Dao<E> {
     } else {
       criteria.eq(name, value);
     }
-    return criteria.toTypedQuery().getResultList();
+    return findBy(criteria);
   }
 
   /**
@@ -282,6 +284,16 @@ public class Dao<E> {
     } else {
       criteria.eq(name, value);
     }
+    return findBy(criteria);
+  }
+
+  /**
+   * 根据条件查找业务实体。
+   * 
+   * @param criteria 查询条件
+   * @return 返回条件相符的业务实体集合，如果没有找到返回一个空的集合。
+   */
+  public List<E> findBy(Criteria<E> criteria) {
     return criteria.toTypedQuery().getResultList();
   }
 
@@ -314,6 +326,16 @@ public class Dao<E> {
   public E findUnique(String name, Object value) {
     Criteria<E> criteria = createCriteria();
     criteria.eq(name, value);
+    return findUnique(criteria);
+  }
+
+  /**
+   * 根据条件查找唯一的业务实体。
+   * 
+   * @param criteria 查询条件
+   * @return 返回指定唯一的业务实体，如果没有找到则返回null。
+   */
+  public E findUnique(Criteria<E> criteria) {
     try {
       TypedQuery<E> query = criteria.toTypedQuery();
       // 启用查询缓存

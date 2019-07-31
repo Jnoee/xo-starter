@@ -35,16 +35,17 @@ public class SwaggerAutoConfiguration {
   /**
    * 配置API接口文档支持组件。
    * 
-   * @param prop Swagger配置
+   * @param prop 配置组件
+   * 
    * @return 返回API接口文档支持组件。
    */
   @Bean
-  Docket docket(SwaggerProperties prop) {
+  public Docket docket(SwaggerProperties prop) {
     Docket apiDocket = new Docket(DocumentationType.SWAGGER_2);
     ApiInfo apiInfo = new ApiInfoBuilder().title(prop.getTitle()).description(prop.getDescription())
         .version(prop.getVersion()).build();
     apiDocket.apiInfo(apiInfo);
-    setDocketSecurity(apiDocket);
+    setDocketSecurity(apiDocket, prop);
     return apiDocket.select().apis(RequestHandlerSelectors.basePackage(prop.getBasePackage()))
         .paths(PathSelectors.any()).build();
   }
@@ -57,8 +58,8 @@ public class SwaggerAutoConfiguration {
    */
   @Bean
   @Primary
-  @ConditionalOnProperty("xo.api.doc.resources[0].url")
-  SwaggerResourcesProvider provider(SwaggerProperties prop) {
+  @ConditionalOnProperty("su.api.doc.resources[0].url")
+  public SwaggerResourcesProvider provider(SwaggerProperties prop) {
     return prop::getResources;
   }
 
@@ -67,8 +68,8 @@ public class SwaggerAutoConfiguration {
    * 
    * @param apiDocket API接口文档组件
    */
-  private void setDocketSecurity(Docket apiDocket) {
-    ApiKey apiKey = new ApiKey("Authorization", "x-auth-token", "header");
+  private void setDocketSecurity(Docket apiDocket, SwaggerProperties prop) {
+    ApiKey apiKey = new ApiKey("Authorization", prop.getTokenName(), "header");
     apiDocket.securitySchemes(Lists.newArrayList(apiKey));
 
     AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");

@@ -1,8 +1,5 @@
 package com.github.jnoee.xo.auth.server;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.DisabledAccountException;
@@ -16,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.jnoee.xo.auth.AuthHelper;
 import com.github.jnoee.xo.auth.AuthToken;
-import com.github.jnoee.xo.utils.CollectionUtils;
-import com.github.jnoee.xo.utils.StringUtils;
 
 /**
  * 认证组件。
@@ -53,24 +48,9 @@ public class AuthServerRealm extends AuthorizingRealm {
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
     AuthToken authToken = (AuthToken) principals.getPrimaryPrincipal();
-    List<String> privilegs = authToken.getPrivilegs();
     SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-    info.addRoles(getRoles(privilegs));
-    info.addStringPermissions(privilegs);
+    info.addRoles(authToken.getRoles());
+    info.addStringPermissions(authToken.getPrivilegs());
     return info;
-  }
-
-  /**
-   * 获取角色列表。
-   * 
-   * @return 返回角色列表
-   */
-  private List<String> getRoles(List<String> privilegs) {
-    List<String> roles = new ArrayList<>();
-    for (String privileg : privilegs) {
-      roles.add(StringUtils.substringBefore(privileg, ":"));
-    }
-    CollectionUtils.distinct(roles);
-    return roles;
   }
 }

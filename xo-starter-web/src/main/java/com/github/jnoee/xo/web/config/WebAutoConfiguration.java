@@ -1,5 +1,6 @@
 package com.github.jnoee.xo.web.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
@@ -14,11 +15,13 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jnoee.xo.utils.DateUtils;
 import com.github.jnoee.xo.web.handler.ErrorView;
 import com.github.jnoee.xo.web.handler.WebErrorAttributes;
 import com.github.jnoee.xo.web.handler.WebErrorController;
+import com.github.jnoee.xo.web.jackson.LongModule;
 
 /**
  * 组件配置。
@@ -26,6 +29,17 @@ import com.github.jnoee.xo.web.handler.WebErrorController;
 @Configuration
 @ConditionalOnWebApplication
 public class WebAutoConfiguration implements WebMvcConfigurer {
+  /**
+   * 配置Long类型Jackson转换组件。
+   * 
+   * @return 返回Long类型Jackson转换组件。
+   */
+  @Bean
+  @ConditionalOnClass(Module.class)
+  public LongModule longModule() {
+    return new LongModule();
+  }
+
   /**
    * 配置ErrorAttributes组件。
    * 

@@ -3,13 +3,24 @@
 	<parent>
 		<groupId>com.github.jnoee</groupId>
 		<artifactId>xo-starter</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</parent>
 	<artifactId>xo-starter-swagger</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>io.swagger</groupId>
+					<artifactId>swagger-models</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-models</artifactId>
+			<version>1.5.22</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.xiaoymin</groupId>

@@ -3,13 +3,18 @@
 	<parent>
 		<groupId>com.github.jnoee</groupId>
 		<artifactId>xo-starter</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</parent>
 	<artifactId>xo-starter-jpa</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>com.github.jnoee</groupId>
 			<artifactId>xo-starter-cache</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jnoee</groupId>
+			<artifactId>xo-starter-id</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>

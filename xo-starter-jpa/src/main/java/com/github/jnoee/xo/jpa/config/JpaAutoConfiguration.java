@@ -11,6 +11,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.github.jnoee.xo.jpa.cache.EntityCacheManager;
 import com.github.jnoee.xo.jpa.dao.DaoUtils;
+import com.github.jnoee.xo.jpa.entity.IdEntityToString;
+import com.github.jnoee.xo.jpa.entity.StringToIdEntity;
 import com.github.jnoee.xo.jpa.entity.StringToUuidEntity;
 import com.github.jnoee.xo.jpa.entity.UuidEntityToString;
 
@@ -44,5 +46,7 @@ public class JpaAutoConfiguration implements WebMvcConfigurer {
   public void addFormatters(FormatterRegistry registry) {
     registry.addConverterFactory(new StringToUuidEntity());
     registry.addConverter(new UuidEntityToString());
+    registry.addConverterFactory(new StringToIdEntity());
+    registry.addConverter(new IdEntityToString());
   }
 }
