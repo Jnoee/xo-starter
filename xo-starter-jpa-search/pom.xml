@@ -15,12 +15,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search-orm</artifactId>
-			<version>5.9.3.Final</version>
+			<version>5.11.2.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search-elasticsearch</artifactId>
-			<version>5.9.3.Final</version>
+			<version>5.11.2.Final</version>
 		</dependency>
 	</dependencies>
 </project>

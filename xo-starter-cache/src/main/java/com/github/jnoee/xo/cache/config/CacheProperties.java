@@ -10,8 +10,8 @@ import lombok.Data;
 @Data
 @ConfigurationProperties("xo.cache")
 public class CacheProperties {
-  /** 是否打开x-auth-token */
-  private Boolean xAuthToken = true;
+  /** 序列化方式 */
+  private String serializer = "fst";
   /** redisson配置文件 */
   private String configFile = "classpath:redisson.yml";
 }

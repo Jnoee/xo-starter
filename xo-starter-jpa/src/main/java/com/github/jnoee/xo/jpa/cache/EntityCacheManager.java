@@ -52,14 +52,14 @@ public class EntityCacheManager {
    * 清空所有实体缓存。
    */
   public void evictEntityRegions() {
-    getCache().evictEntityRegions();
+    getCache().evictEntityData();
   }
 
   /**
    * 清空所有集合缓存。
    */
   public void evictCollectionRegions() {
-    getCache().evictCollectionRegions();
+    getCache().evictCollectionData();
   }
 
   /**

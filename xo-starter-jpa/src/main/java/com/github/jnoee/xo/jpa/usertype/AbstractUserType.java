@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.Column;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
-import org.hibernate.internal.util.compare.EqualsHelper;
 import org.hibernate.type.StringType;
 import org.hibernate.usertype.UserType;
 
@@ -95,7 +95,7 @@ public abstract class AbstractUserType implements UserType {
 
   @Override
   public boolean equals(Object x, Object y) {
-    return EqualsHelper.equals(x, y);
+    return Objects.equals(x, y);
   }
 
   @Override

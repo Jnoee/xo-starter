@@ -10,6 +10,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.github.jnoee.xo.jpa.cache.EntityCacheManager;
+import com.github.jnoee.xo.jpa.cache.JpaCacheRegionFactoryPostProcessor;
 import com.github.jnoee.xo.jpa.dao.DaoUtils;
 import com.github.jnoee.xo.jpa.entity.IdEntityToString;
 import com.github.jnoee.xo.jpa.entity.StringToIdEntity;
@@ -23,6 +24,13 @@ public class JpaAutoConfiguration implements WebMvcConfigurer {
   @Bean
   EntityCacheManager entityCacheManager() {
     return new EntityCacheManager();
+  }
+
+  @ConditionalOnProperty(name = "spring.jpa.properties.hibernate.cache.region.factory_class",
+      havingValue = "com.github.jnoee.xo.jpa.cache.JpaCacheRegionFactory")
+  @Bean
+  JpaCacheRegionFactoryPostProcessor jpaCacheRegionFactoryPostProcessor() {
+    return new JpaCacheRegionFactoryPostProcessor();
   }
 
   /**

@@ -7,7 +7,6 @@ import com.github.jnoee.xo.cache.config.AbstractCacheSettings;
  */
 public class CacheSettings extends AbstractCacheSettings {
   public CacheSettings() {
-    addRegion("org.hibernate.cache.spi.UpdateTimestampsCache",
-        "org.hibernate.cache.internal.StandardQueryCache");
+    addRegion("default-update-timestamps-region", "default-query-results-region");
   }
 }

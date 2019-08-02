@@ -58,7 +58,7 @@ public class SwaggerAutoConfiguration {
    */
   @Bean
   @Primary
-  @ConditionalOnProperty("su.api.doc.resources[0].url")
+  @ConditionalOnProperty("xo.api.doc.resources[0].url")
   public SwaggerResourcesProvider provider(SwaggerProperties prop) {
     return prop::getResources;
   }

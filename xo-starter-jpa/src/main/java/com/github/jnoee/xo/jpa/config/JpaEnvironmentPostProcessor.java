@@ -5,7 +5,7 @@ import java.util.Properties;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl;
 
 import com.github.jnoee.xo.config.GenericEnvironmentPostProcessor;
-import com.integralblue.hibernate.cache.springcache.SpringCacheRegionFactory;
+import com.github.jnoee.xo.jpa.cache.JpaCacheRegionFactory;
 
 /**
  * JPA默认配置处理器。
@@ -29,7 +29,7 @@ public class JpaEnvironmentPostProcessor implements GenericEnvironmentPostProces
         PhysicalNamingStrategyStandardImpl.class.getName());
     props.put("spring.jpa.properties.hibernate.cache.use_query_cache", true);
     props.put("spring.jpa.properties.hibernate.cache.region.factory_class",
-        SpringCacheRegionFactory.class.getName());
+        JpaCacheRegionFactory.class.getName());
     return props;
   }
 }

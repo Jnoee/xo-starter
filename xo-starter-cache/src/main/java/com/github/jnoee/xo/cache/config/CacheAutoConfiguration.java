@@ -8,15 +8,12 @@ import org.redisson.codec.FstCodec;
 import org.redisson.config.Config;
 import org.redisson.spring.session.config.EnableRedissonHttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
-import org.springframework.session.web.http.HttpSessionIdResolver;
 
 import com.github.jnoee.xo.cache.GenericCacheManager;
 
@@ -28,13 +25,6 @@ public class CacheAutoConfiguration {
   @Autowired
   private CacheProperties cacheProperties;
 
-  @Bean
-  @ConditionalOnProperty(name = "xo.cache.x-auth-token", havingValue = "true",
-      matchIfMissing = true)
-  HttpSessionIdResolver httpSessionIdResolver() {
-    return HeaderHttpSessionIdResolver.xAuthToken();
-  }
-
   @Bean(destroyMethod = "shutdown")
   RedissonClient redisson() throws IOException {
     String configFile = cacheProperties.getConfigFile();
@@ -45,7 +35,9 @@ public class CacheAutoConfiguration {
     } else {
       config = Config.fromYAML(resource.getInputStream());
     }
-    config.setCodec(new FstCodec());
+    if ("fst".equals(cacheProperties.getSerializer())) {
+      config.setCodec(new FstCodec());
+    }
     return Redisson.create(config);
   }
 

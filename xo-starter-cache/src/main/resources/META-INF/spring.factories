@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.github.jnoee.xo.cache.config.CacheAutoConfiguration
+com.github.jnoee.xo.cache.config.CacheAutoConfiguration,\
+com.github.jnoee.xo.cache.config.SessionAutoConfiguration
