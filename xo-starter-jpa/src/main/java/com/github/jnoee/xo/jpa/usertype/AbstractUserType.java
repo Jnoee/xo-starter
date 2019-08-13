@@ -6,10 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.Column;
 
@@ -27,7 +25,6 @@ import com.github.jnoee.xo.utils.StringUtils;
  */
 public abstract class AbstractUserType implements UserType {
   protected static final int[] SQL_TYPES = new int[] {Types.VARCHAR};
-  protected static Map<Class<?>, List<Field>> ownerFields = new ConcurrentHashMap<>();
 
   /**
    * 根据字段标签名获取源对象中对应字段的属性对象。
@@ -40,13 +37,9 @@ public abstract class AbstractUserType implements UserType {
   protected Field getField(ResultSet rs, String columnLabel, Object owner) {
     try {
       String columnName = rs.getMetaData().getColumnName(rs.findColumn(columnLabel));
-      List<Field> fields = ownerFields.get(owner.getClass());
-      if (fields == null) {
-        fields = BeanUtils.getAllDeclaredField(owner.getClass());
-        ownerFields.put(owner.getClass(), fields);
-      }
+      Map<String, Field> fields = BeanUtils.getDeclaredFields(owner.getClass());
       // 如果使用了@Column注解，优先用@Column注解设定的名称进行匹配
-      for (Field field : fields) {
+      for (Field field : fields.values()) {
         Column column = field.getAnnotation(Column.class);
         if (column != null && StringUtils.isNotBlank(column.name())
             && column.name().equalsIgnoreCase(columnName)) {
@@ -54,7 +47,7 @@ public abstract class AbstractUserType implements UserType {
         }
       }
       // 如果从@Column注解没有找到则从全部属性中进行匹配
-      for (Field field : fields) {
+      for (Field field : fields.values()) {
         if (field.isAnnotationPresent(Type.class) && field.getName().equalsIgnoreCase(columnName)) {
           return field;
         }

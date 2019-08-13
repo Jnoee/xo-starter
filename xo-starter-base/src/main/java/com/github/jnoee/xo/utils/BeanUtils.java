@@ -7,9 +7,13 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import com.github.jnoee.xo.exception.SysException;
 
@@ -17,6 +21,9 @@ import com.github.jnoee.xo.exception.SysException;
  * Bean工具类。用于直接操作类、对象的属性或方法。
  */
 public class BeanUtils {
+  /** 类属性缓存 */
+  private static Map<Class<?>, Map<String, Field>> fieldsCache = new ConcurrentHashMap<>();
+
   /**
    * 获取类中指定名称的属性，支持多层级。
    * 
@@ -42,7 +49,7 @@ public class BeanUtils {
   public static List<Field> findField(Class<?> targetClass,
       Class<? extends Annotation> annotationClassOnField) {
     List<Field> fields = new ArrayList<>();
-    for (Field field : getAllDeclaredField(targetClass)) {
+    for (Field field : getDeclaredFields(targetClass).values()) {
       if (field.isAnnotationPresent(annotationClassOnField)) {
         fields.add(field);
       }
@@ -121,42 +128,39 @@ public class BeanUtils {
   }
 
   /**
-   * 获取指定类所有的公共属性列表。
+   * 获取指定类所有的公共属性集合。
    * 
-   * @param targetClass 类
-   * @param excludeFieldNames 排除的属性名称
-   * @return 返回Field列表。
+   * @param targetClass 目标类
+   * @return 返回指定类所有的公共属性集合。
    */
-  public static List<Field> getAllDeclaredField(Class<?> targetClass, String... excludeFieldNames) {
-    List<Field> fields = new ArrayList<>();
+  public static Map<String, Field> getAllDeclaredFields(Class<?> targetClass) {
+    if (fieldsCache.containsKey(targetClass)) {
+      return fieldsCache.get(targetClass);
+    }
+    Map<String, Field> fields = new LinkedHashMap<>();
     for (Field field : targetClass.getDeclaredFields()) {
-      if (CollectionUtils.contains(excludeFieldNames, field.getName())) {
-        continue;
-      }
-      fields.add(field);
+      fields.put(field.getName(), field);
     }
     Class<?> parentClass = targetClass.getSuperclass();
     if (parentClass != Object.class) {
-      fields.addAll(getAllDeclaredField(parentClass, excludeFieldNames));
+      fields.putAll(getAllDeclaredFields(parentClass));
     }
+    fieldsCache.put(targetClass, fields);
     return fields;
   }
 
   /**
    * 获取指定类非static、final的公共属性列表。
    * 
-   * @param targetClass 类
-   * @param excludeFieldNames 排除的属性名称
-   * @return 返回Field列表。
+   * @param targetClass 目标类
+   * @return 返回指定类非static、final的公共属性列表。
    */
-  public static List<Field> getDeclaredFields(Class<?> targetClass, String... excludeFieldNames) {
-    List<Field> fields = new ArrayList<>();
-    for (Field field : getAllDeclaredField(targetClass, excludeFieldNames)) {
-      if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())) {
-        fields.add(field);
-      }
-    }
-    return fields;
+  public static Map<String, Field> getDeclaredFields(Class<?> targetClass) {
+    Map<String, Field> fields = getAllDeclaredFields(targetClass);
+    return fields.entrySet().stream()
+        .filter(map -> !Modifier.isStatic(map.getValue().getModifiers())
+            && !Modifier.isFinal(map.getValue().getModifiers()))
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
   /**
@@ -166,7 +170,8 @@ public class BeanUtils {
    * @param target 目标对象
    */
   public static void copyFields(Object source, Object target) {
-    copyFields(source, target, null, null);
+    String includeFieldNames = StringUtils.join(getDeclaredFields(source.getClass()).keySet(), ",");
+    copyFieldsInclude(source, target, includeFieldNames);
   }
 
   /**
@@ -174,73 +179,61 @@ public class BeanUtils {
    * 
    * @param source 源对象
    * @param target 目标对象
-   * @param excludeFields 不复制的Field的名称，多个名称之间用“,”分割
+   * @param includeFieldNames 要复制的Field的名称，多个名称之间用“,”分割
    */
-  public static void copyFields(Object source, Object target, String excludeFields) {
-    copyFields(source, target, null, excludeFields);
+  public static void copyFieldsInclude(Object source, Object target, String includeFieldNames) {
+    copyFieldsInclude(source, target, includeFieldNames, null);
   }
 
   /**
-   * 复制两个对象相同Field的值，忽略源对象中为null的Field，但如果指定了要复制的Field，则为null时该Field也复制。
+   * 复制两个对象相同Field的值，忽略源对象中为null的Field。如果指定了要复制null值的Field，则为null时该Field也复制。
    * 
    * @param source 源对象
    * @param target 目标对象
-   * @param includeFields 要复制的Field的名称，多个名称之间用“,”分割
-   * @param excludeFields 不复制的Field的名称，多个名称之间用“,”分割
+   * @param includeFieldNames 要复制的Field的名称，多个名称之间用“,”分割
+   * @param copyNullFieldNames 要复制null值的Field的名称，多个名称之间用“,”分割
    */
-  public static void copyFields(Object source, Object target, String includeFields,
-      String excludeFields) {
+  public static void copyFieldsInclude(Object source, Object target, String includeFieldNames,
+      String copyNullFieldNames) {
     checkSourceAndTarget(source, target);
     // 如果源对象是懒加载对象，先处理成非懒加载
     source = processHibernateLazyObject(source);
-    String[] includeFieldNames = new String[] {};
-    if (!StringUtils.isBlank(includeFields)) {
-      includeFieldNames = includeFields.split(",");
-    }
-    String[] excludeFieldNames = new String[] {};
-    if (!StringUtils.isBlank(excludeFields)) {
-      excludeFieldNames = excludeFields.split(",");
-    }
-    List<Field> fields = getAllDeclaredField(source.getClass(), excludeFieldNames);
-    for (Field field : fields) {
-      if (CollectionUtils.contains(includeFieldNames, field.getName())) {
-        copyField(source, target, field.getName(), true);
+    List<String> copyNullFields = stringToList(copyNullFieldNames);
+    List<String> includeFields = stringToList(includeFieldNames);
+    for (String fieldName : includeFields) {
+      if (copyNullFields.contains(fieldName)) {
+        copyField(source, target, fieldName, true);
       } else {
-        copyField(source, target, field.getName(), false);
+        copyField(source, target, fieldName, false);
       }
     }
   }
 
   /**
-   * 复制两个对象指定Field的值。
+   * 复制两个对象相同Field的值，忽略源对象中为null的Field。
    * 
    * @param source 源对象
    * @param target 目标对象
-   * @param fieldName Field的名称
-   * @param containedNull 是否复制null值
+   * @param excludeFieldNames 不复制的Field的名称，多个名称之间用“,”分割
    */
-  @SuppressWarnings("unchecked")
-  public static void copyField(Object source, Object target, String fieldName,
-      Boolean containedNull) {
-    // 如果源对象是懒加载对象，先处理成非懒加载
-    source = processHibernateLazyObject(source);
-    Object sourceFieldValue = getField(source, fieldName);
-    Boolean needCopy = isFieldNeedCopy(source, target, fieldName);
-    if (sourceFieldValue == null && !containedNull) {
-      needCopy = false;
-    }
-    if (needCopy) {
-      // 处理Collection类型的属性
-      if (sourceFieldValue != null
-          && Collection.class.isAssignableFrom(sourceFieldValue.getClass())) {
-        if (!((Collection<Object>) sourceFieldValue).isEmpty() || containedNull) {
-          CollectionUtils.copy((Collection<Object>) sourceFieldValue,
-              (Collection<Object>) getField(target, fieldName));
-        }
-      } else {
-        setField(target, fieldName, sourceFieldValue);
-      }
-    }
+  public static void copyFieldsExclude(Object source, Object target, String excludeFieldNames) {
+    copyFieldsExclude(source, target, excludeFieldNames, null);
+  }
+
+  /**
+   * 复制两个对象相同Field的值，忽略源对象中为null的Field。如果指定了要复制null值的Field，则为null时该Field也复制。
+   * 
+   * @param source 源对象
+   * @param target 目标对象
+   * @param excludeFieldNames 不复制的Field的名称，多个名称之间用“,”分割
+   * @param copyNullFieldNames 要复制null值的Field的名称，多个名称之间用“,”分割
+   */
+  public static void copyFieldsExclude(Object source, Object target, String excludeFieldNames,
+      String copyNullFieldNames) {
+    List<String> excludeFields = stringToList(excludeFieldNames);
+    String includeFieldNames = getDeclaredFields(source.getClass()).keySet().stream()
+        .filter(k -> !excludeFields.contains(k)).collect(Collectors.joining(","));
+    copyFieldsInclude(source, target, includeFieldNames, copyNullFieldNames);
   }
 
   /**
@@ -277,63 +270,45 @@ public class BeanUtils {
   }
 
   /**
-   * 复制Bean对象属性到Map对象。
+   * 属性名字符串转换成列表。
    * 
-   * @param bean Bean对象
-   * @param map Map对象
+   * @param fieldNames 逗号分隔的属性名字符串
+   * @return 返回属性名列表。
    */
-  public static void copyProperties(Object bean, Map<String, Object> map) {
-    copyProperties(bean, map, null);
+  private static List<String> stringToList(String fieldNames) {
+    List<String> fields = new ArrayList<>();
+    if (!StringUtils.isBlank(fieldNames)) {
+      Arrays.stream(fieldNames.split(",")).forEach(fieldName -> fields.add(fieldName.trim()));
+    }
+    return fields;
   }
 
   /**
-   * 复制Bean对象属性到Map对象。
+   * 复制两个对象指定Field的值。
    * 
-   * @param bean Bean对象
-   * @param map Map对象
-   * @param excludeFields 不复制的Field的名称，多个名称之间用“,”分割
+   * @param source 源对象
+   * @param target 目标对象
+   * @param fieldName Field的名称
+   * @param containedNull 是否复制null值
    */
-  public static void copyProperties(Object bean, Map<String, Object> map, String excludeFields) {
-    checkSourceAndTarget(bean, map);
-    String[] excludeFieldNames = new String[] {};
-    if (!StringUtils.isBlank(excludeFields)) {
-      excludeFieldNames = excludeFields.split(",");
+  @SuppressWarnings("unchecked")
+  private static void copyField(Object source, Object target, String fieldName,
+      Boolean containedNull) {
+    Object sourceFieldValue = getField(source, fieldName);
+    Boolean needCopy = isFieldNeedCopy(source, target, fieldName);
+    if (sourceFieldValue == null && !containedNull) {
+      needCopy = false;
     }
-    for (Field field : getAllDeclaredField(bean.getClass(), excludeFieldNames)) {
-      if (!CollectionUtils.contains(excludeFieldNames, field.getName())) {
-        map.put(field.getName(), getField(bean, field));
-      }
-    }
-  }
-
-  /**
-   * 复制Map对象属性到Bean对象。
-   * 
-   * @param map Map对象
-   * @param bean Bean对象
-   */
-  public static void copyProperties(Map<String, Object> map, Object bean) {
-    copyProperties(map, bean, null);
-  }
-
-  /**
-   * 复制Map对象属性到Bean对象。
-   * 
-   * @param map Map对象
-   * @param bean Bean对象
-   * @param excludeFields 不复制的Field的名称，多个名称之间用“,”分割
-   * 
-   */
-  public static void copyProperties(Map<String, Object> map, Object bean, String excludeFields) {
-    checkSourceAndTarget(map, bean);
-    String[] excludeFieldNames = new String[] {};
-    if (!StringUtils.isBlank(excludeFields)) {
-      excludeFieldNames = excludeFields.split(",");
-    }
-    for (Map.Entry<String, Object> entity : map.entrySet()) {
-      Field field = findField(bean.getClass(), entity.getKey());
-      if (field != null && !CollectionUtils.contains(excludeFieldNames, entity.getKey())) {
-        setField(bean, field, entity.getValue());
+    if (needCopy) {
+      // 处理Collection类型的属性
+      if (sourceFieldValue != null
+          && Collection.class.isAssignableFrom(sourceFieldValue.getClass())) {
+        if (!((Collection<Object>) sourceFieldValue).isEmpty() || containedNull) {
+          CollectionUtils.copy((Collection<Object>) sourceFieldValue,
+              (Collection<Object>) getField(target, fieldName));
+        }
+      } else {
+        setField(target, fieldName, sourceFieldValue);
       }
     }
   }
@@ -364,15 +339,14 @@ public class BeanUtils {
    * 
    * @param targetClass 类
    * @param fieldName 属性名
-   * @return 返回对应的属性，如果没找到返回null。
+   * @return 返回对应的属性，如果没找到抛出异常。
    */
   private static Field findDirectField(Class<?> targetClass, String fieldName) {
-    for (Field field : getAllDeclaredField(targetClass)) {
-      if (fieldName.equals(field.getName())) {
-        return field;
-      }
+    Field field = getAllDeclaredFields(targetClass).get(fieldName);
+    if (field == null) {
+      throw new SysException("类[" + targetClass.getName() + "]中未找到属性[" + fieldName + "]。");
     }
-    throw new SysException("类[" + targetClass.getName() + "]中未找到属性[" + fieldName + "]。");
+    return field;
   }
 
   /**
