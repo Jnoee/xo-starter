@@ -16,7 +16,7 @@ public class SessionBeanPostProcessor implements BeanPostProcessor {
     if (bean instanceof RedissonSessionRepository) {
       RedissonSessionRepository repo = (RedissonSessionRepository) bean;
       repo.setDefaultMaxInactiveInterval(sessionProperties.getTimeout() * 60);
-      repo.setKeyPrefix(sessionProperties.getNamespace());
+      repo.setKeyPrefix(sessionProperties.getNamespace() + ":");
     }
     return bean;
   }
