@@ -35,7 +35,17 @@ public class FastDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  public String upload(String dir, File file) {
+    return upload(dir, file, new HashMap<String, String>());
+  }
+
+  @Override
   public String upload(File file, Map<String, String> metadata) {
+    return upload(null, file, metadata);
+  }
+
+  @Override
+  public String upload(String dir, File file, Map<String, String> metadata) {
     try (InputStream in = new FileInputStream(file)) {
       StorePath storePath = storageClient.uploadFile(in, file.length(),
           FilenameUtils.getExtension(file.getName()), toMataData(metadata));
@@ -51,7 +61,19 @@ public class FastDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  @Deprecated
+  public String upload(String dir, MultipartFile file) {
+    return upload(dir, file, new HashMap<String, String>());
+  }
+
+  @Override
   public String upload(MultipartFile file, Map<String, String> metadata) {
+    return upload(null, file, metadata);
+  }
+
+  @Override
+  @Deprecated
+  public String upload(String dir, MultipartFile file, Map<String, String> metadata) {
     try {
       StorePath storePath = storageClient.uploadFile(file.getInputStream(), file.getSize(),
           FilenameUtils.getExtension(file.getOriginalFilename()), toMataData(metadata));

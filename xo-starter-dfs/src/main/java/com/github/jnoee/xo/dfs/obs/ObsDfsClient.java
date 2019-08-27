@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.jnoee.xo.dfs.AbstractDfsClient;
 import com.github.jnoee.xo.exception.SysException;
 import com.github.jnoee.xo.utils.CollectionUtils;
+import com.github.jnoee.xo.utils.StringUtils;
 import com.obs.services.ObsClient;
 import com.obs.services.model.ObjectMetadata;
 import com.obs.services.model.ObsObject;
@@ -47,12 +48,22 @@ public class ObsDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  public String upload(String dir, File file) {
+    return upload(dir, file, null);
+  }
+
+  @Override
   public String upload(File file, Map<String, String> metadataMap) {
+    return upload(null, file, metadataMap);
+  }
+
+  @Override
+  public String upload(String dir, File file, Map<String, String> metadataMap) {
     String fileName = genUuidFileName(file.getName());
-    ObjectMetadata metadata = null;
-    if (CollectionUtils.isNotEmpty(metadataMap)) {
-      metadata = map2metadata(metadataMap);
+    if (StringUtils.isNotBlank(dir)) {
+      fileName = dir + "/" + fileName;
     }
+    ObjectMetadata metadata = map2metadata(metadataMap);
     PutObjectResult result =
         obsClient.putObject(props.getDefaultBucketName(), fileName, file, metadata);
     return result.getObjectKey();
@@ -64,12 +75,22 @@ public class ObsDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  public String upload(String dir, MultipartFile file) {
+    return upload(dir, file, null);
+  }
+
+  @Override
   public String upload(MultipartFile file, Map<String, String> metadataMap) {
+    return upload(null, file, metadataMap);
+  }
+
+  @Override
+  public String upload(String dir, MultipartFile file, Map<String, String> metadataMap) {
     String fileName = genUuidFileName(file.getOriginalFilename());
-    ObjectMetadata metadata = null;
-    if (CollectionUtils.isNotEmpty(metadataMap)) {
-      metadata = map2metadata(metadataMap);
+    if (StringUtils.isNotBlank(dir)) {
+      fileName = dir + "/" + fileName;
     }
+    ObjectMetadata metadata = map2metadata(metadataMap);
     try (InputStream in = file.getInputStream()) {
       PutObjectResult result =
           obsClient.putObject(props.getDefaultBucketName(), fileName, in, metadata);
@@ -116,9 +137,12 @@ public class ObsDfsClient extends AbstractDfsClient {
    * @return 返回ObjectMetadata对象。
    */
   private ObjectMetadata map2metadata(Map<String, String> metadataMap) {
-    ObjectMetadata metadata = new ObjectMetadata();
-    metadataMap.forEach(metadata::addUserMetadata);
-    return metadata;
+    if (CollectionUtils.isNotEmpty(metadataMap)) {
+      ObjectMetadata metadata = new ObjectMetadata();
+      metadataMap.forEach(metadata::addUserMetadata);
+      return metadata;
+    }
+    return null;
   }
 
   /**

@@ -20,11 +20,30 @@ public interface DfsClient {
   /**
    * 上传文件。
    * 
+   * @param dir 文件目录
+   * @param file 文件对象
+   * @return 返回上传后的文件名。
+   */
+  String upload(String dir, File file);
+
+  /**
+   * 上传文件。
+   * 
    * @param file 文件对象
    * @param metadataMap 文件元数据
    * @return 返回上传后的文件名。
    */
   String upload(File file, Map<String, String> metadataMap);
+
+  /**
+   * 上传文件。
+   * 
+   * @param dir 文件目录
+   * @param file 文件对象
+   * @param metadataMap 文件元数据
+   * @return 返回上传后的文件名。
+   */
+  String upload(String dir, File file, Map<String, String> metadataMap);
 
   /**
    * 上传文件。
@@ -37,11 +56,30 @@ public interface DfsClient {
   /**
    * 上传文件。
    * 
+   * @param dir 文件目录
+   * @param file 文件对象
+   * @return 返回上传后的文件名。
+   */
+  String upload(String dir, MultipartFile file);
+
+  /**
+   * 上传文件。
+   * 
    * @param file 文件对象
    * @param metadataMap 文件元数据
    * @return 返回上传后的文件名。
    */
   String upload(MultipartFile file, Map<String, String> metadataMap);
+
+  /**
+   * 上传文件。
+   * 
+   * @param dir 文件目录
+   * @param file 文件对象
+   * @param metadataMap 文件元数据
+   * @return 返回上传后的文件名。
+   */
+  String upload(String dir, MultipartFile file, Map<String, String> metadataMap);
 
   /**
    * 下载文件。

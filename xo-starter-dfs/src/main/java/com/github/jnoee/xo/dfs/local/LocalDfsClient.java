@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.jnoee.xo.dfs.AbstractDfsClient;
 import com.github.jnoee.xo.exception.SysException;
+import com.github.jnoee.xo.utils.StringUtils;
 
 /**
  * 本地文件服务客户端组件。
@@ -25,12 +26,21 @@ public class LocalDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  public String upload(String dir, File file) {
+    return upload(dir, file, new HashMap<String, String>());
+  }
+
+  @Override
   public String upload(File file, Map<String, String> metadata) {
+    return upload(null, file, metadata);
+  }
+
+  @Override
+  public String upload(String dir, File file, Map<String, String> metadata) {
     try {
       String fileName = genUuidFileName(file.getName());
-      File dir = new File(props.getLocalDir());
-      if (!dir.exists() && dir.isDirectory()) {
-        dir.mkdirs();
+      if (StringUtils.isNotBlank(dir)) {
+        fileName = dir + File.separator + fileName;
       }
       File localFile = new File(getFilePath(fileName));
       FileUtils.copyFile(file, localFile);
@@ -46,12 +56,21 @@ public class LocalDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  public String upload(String dir, MultipartFile file) {
+    return upload(dir, file, new HashMap<String, String>());
+  }
+
+  @Override
   public String upload(MultipartFile file, Map<String, String> metadata) {
+    return upload(null, file, metadata);
+  }
+
+  @Override
+  public String upload(String dir, MultipartFile file, Map<String, String> metadata) {
     try {
       String fileName = genUuidFileName(file.getOriginalFilename());
-      File dir = new File(props.getLocalDir());
-      if (!dir.exists() && dir.isDirectory()) {
-        dir.mkdirs();
+      if (StringUtils.isNotBlank(dir)) {
+        fileName = dir + File.separator + fileName;
       }
       File localFile = new File(getFilePath(fileName));
       FileUtils.copyInputStreamToFile(file.getInputStream(), localFile);

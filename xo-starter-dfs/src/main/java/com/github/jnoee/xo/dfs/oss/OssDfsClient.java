@@ -22,6 +22,7 @@ import com.aliyun.oss.model.ObjectMetadata;
 import com.github.jnoee.xo.dfs.AbstractDfsClient;
 import com.github.jnoee.xo.exception.SysException;
 import com.github.jnoee.xo.utils.CollectionUtils;
+import com.github.jnoee.xo.utils.StringUtils;
 
 public class OssDfsClient extends AbstractDfsClient {
   @Autowired
@@ -46,8 +47,21 @@ public class OssDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  public String upload(String dir, File file) {
+    return upload(dir, file, null);
+  }
+
+  @Override
   public String upload(File file, Map<String, String> metadataMap) {
+    return upload(null, file, metadataMap);
+  }
+
+  @Override
+  public String upload(String dir, File file, Map<String, String> metadataMap) {
     String fileName = genUuidFileName(file.getName());
+    if (StringUtils.isNotBlank(dir)) {
+      fileName = dir + "/" + fileName;
+    }
     ObjectMetadata metadata = null;
     if (CollectionUtils.isNotEmpty(metadataMap)) {
       metadata = map2metadata(metadataMap);
@@ -62,8 +76,21 @@ public class OssDfsClient extends AbstractDfsClient {
   }
 
   @Override
+  public String upload(String dir, MultipartFile file) {
+    return upload(dir, file, null);
+  }
+
+  @Override
   public String upload(MultipartFile file, Map<String, String> metadataMap) {
+    return upload(null, file, metadataMap);
+  }
+
+  @Override
+  public String upload(String dir, MultipartFile file, Map<String, String> metadataMap) {
     String fileName = genUuidFileName(file.getOriginalFilename());
+    if (StringUtils.isNotBlank(dir)) {
+      fileName = dir + "/" + fileName;
+    }
     ObjectMetadata metadata = null;
     if (CollectionUtils.isNotEmpty(metadataMap)) {
       metadata = map2metadata(metadataMap);
