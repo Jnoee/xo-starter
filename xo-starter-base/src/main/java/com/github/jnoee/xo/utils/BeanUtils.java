@@ -201,11 +201,7 @@ public class BeanUtils {
     List<String> copyNullFields = stringToList(copyNullFieldNames);
     List<String> includeFields = stringToList(includeFieldNames);
     for (String fieldName : includeFields) {
-      if (copyNullFields.contains(fieldName)) {
-        copyField(source, target, fieldName, true);
-      } else {
-        copyField(source, target, fieldName, false);
-      }
+      copyField(source, target, fieldName, copyNullFields.contains(fieldName));
     }
   }
 
