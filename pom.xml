@@ -66,6 +66,7 @@
 	<modules>
 		<module>xo-starter-base</module>
 		<module>xo-starter-cache</module>
+		<module>xo-starter-session</module>
 		<module>xo-starter-dfs</module>
 		<module>xo-starter-swagger</module>
 		<module>xo-starter-web</module>
@@ -89,6 +90,5 @@
 		<module>xo-starter-word</module>
 		<module>xo-starter-banner</module>
 		<module>xo-starter-id</module>
-		<module>xo-starter-session</module>
 	</modules>
 </project>
