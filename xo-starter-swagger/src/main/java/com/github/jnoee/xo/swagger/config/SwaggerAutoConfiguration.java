@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import com.google.common.collect.Lists;
 
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -31,6 +32,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(SwaggerProperties.class)
 @EnableSwagger2
+@EnableSwaggerBootstrapUI
 public class SwaggerAutoConfiguration {
   /**
    * 配置API接口文档支持组件。
