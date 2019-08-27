@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.github.jnoee.xo.cache.redis.config.RedisCacheAutoConfiguration,\
+com.github.jnoee.xo.cache.redis.config.RedisLockAutoConfiguration

@@ -6,16 +6,17 @@
 		<artifactId>xo-starter</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
 	</parent>
-	<artifactId>xo-starter-session</artifactId>
+	<artifactId>xo-starter-session-redisson</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>com.github.jnoee</groupId>
-			<artifactId>xo-starter-cache</artifactId>
+			<artifactId>xo-starter-session</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session-core</artifactId>
+			<groupId>com.github.jnoee</groupId>
+			<artifactId>xo-starter-cache-redisson</artifactId>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 </project>

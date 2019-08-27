@@ -1,11 +1,13 @@
 package com.github.jnoee.xo.cache;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Cache配置。
  */
-@Data
+@Getter
+@Setter
 public class CacheRegion {
   /** 缓存名称 */
   private String name;
@@ -15,6 +17,8 @@ public class CacheRegion {
   private Integer maxIdleTime = 60;
   /** 最大数量 */
   private Integer maxSize = 1000;
+  /** 是否缓存空值 */
+  private Boolean cachingNullValues = false;
 
   public CacheRegion(String name) {
     this.name = name;
@@ -33,5 +37,10 @@ public class CacheRegion {
   public CacheRegion(String name, Integer ttl, Integer maxIdelTime, Integer maxSize) {
     this(name, ttl, maxIdelTime);
     this.maxSize = maxSize;
+  }
+
+  public CacheRegion(String name, Integer ttl, Boolean cachingNullValues) {
+    this(name, ttl);
+    this.cachingNullValues = cachingNullValues;
   }
 }

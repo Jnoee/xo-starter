@@ -66,7 +66,11 @@
 	<modules>
 		<module>xo-starter-base</module>
 		<module>xo-starter-cache</module>
+		<module>xo-starter-cache-redis</module>
+		<module>xo-starter-cache-redisson</module>
 		<module>xo-starter-session</module>
+		<module>xo-starter-session-redis</module>
+		<module>xo-starter-session-redisson</module>
 		<module>xo-starter-dfs</module>
 		<module>xo-starter-swagger</module>
 		<module>xo-starter-web</module>
