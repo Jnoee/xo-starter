@@ -1,4 +1,4 @@
-package com.github.jnoee.xo.cache.config;
+package com.github.jnoee.xo.cache;
 
 import lombok.Data;
 

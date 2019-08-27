@@ -1,6 +1,6 @@
 package com.github.jnoee.xo.jpa.config;
 
-import com.github.jnoee.xo.cache.config.AbstractCacheSettings;
+import com.github.jnoee.xo.cache.AbstractCacheSettings;
 
 /**
  * 查询缓存配置。

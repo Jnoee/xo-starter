@@ -1,8 +1,10 @@
-package com.github.jnoee.xo.cache.config;
+package com.github.jnoee.xo.session.redisson;
 
 import org.redisson.spring.session.RedissonSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+
+import com.github.jnoee.xo.session.config.SessionProperties;
 
 /**
  * Session过期时间处理器。

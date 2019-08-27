@@ -4,7 +4,10 @@ import java.io.IOException;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.client.codec.Codec;
 import org.redisson.codec.FstCodec;
+import org.redisson.codec.JsonJacksonCodec;
+import org.redisson.codec.SerializationCodec;
 import org.redisson.config.Config;
 import org.redisson.spring.session.config.EnableRedissonHttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-import com.github.jnoee.xo.cache.GenericCacheManager;
+import com.github.jnoee.xo.cache.CacheSerializer;
+import com.github.jnoee.xo.cache.redisson.GenericRedissonCacheManager;
+import com.github.jnoee.xo.exception.SysException;
 
 @Configuration
 @EnableCaching
@@ -35,15 +40,26 @@ public class CacheAutoConfiguration {
     } else {
       config = Config.fromYAML(resource.getInputStream());
     }
-    if ("fst".equals(cacheProperties.getSerializer())) {
-      config.setCodec(new FstCodec());
-    }
+    config.setCodec(getCodec(cacheProperties.getSerializer()));
     return Redisson.create(config);
   }
 
   @Bean
   CacheManager cacheManager(RedissonClient redissonClient) {
-    return new GenericCacheManager(redissonClient);
+    return new GenericRedissonCacheManager(redissonClient);
+  }
+
+  private Codec getCodec(CacheSerializer type) {
+    switch (type) {
+      case JAVA:
+        return new SerializationCodec(getClass().getClassLoader());
+      case JSON:
+        return new JsonJacksonCodec(getClass().getClassLoader());
+      case FST:
+        return new FstCodec(getClass().getClassLoader());
+      default:
+        throw new SysException("没有匹配的序列化器。");
+    }
   }
 
   private Boolean isJsonFile(String fileName) {

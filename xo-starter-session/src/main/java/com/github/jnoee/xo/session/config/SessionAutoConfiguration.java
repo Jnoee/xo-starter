@@ -1,4 +1,4 @@
-package com.github.jnoee.xo.cache.config;
+package com.github.jnoee.xo.session.config;
 
 import org.redisson.spring.session.config.EnableRedissonHttpSession;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.session.web.http.HeaderHttpSessionIdResolver;
 import org.springframework.session.web.http.HttpSessionIdResolver;
+
+import com.github.jnoee.xo.session.redisson.SessionBeanPostProcessor;
 
 @Configuration
 @EnableRedissonHttpSession

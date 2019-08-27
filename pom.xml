@@ -89,5 +89,6 @@
 		<module>xo-starter-word</module>
 		<module>xo-starter-banner</module>
 		<module>xo-starter-id</module>
+		<module>xo-starter-session</module>
 	</modules>
 </project>
