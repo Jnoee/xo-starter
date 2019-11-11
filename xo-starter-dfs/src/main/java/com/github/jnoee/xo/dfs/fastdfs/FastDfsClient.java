@@ -15,7 +15,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.github.jnoee.xo.dfs.AbstractDfsClient;
+import com.github.jnoee.xo.dfs.DfsClient;
 import com.github.jnoee.xo.exception.SysException;
 import com.github.tobato.fastdfs.domain.MataData;
 import com.github.tobato.fastdfs.domain.StorePath;
@@ -25,7 +25,7 @@ import com.github.tobato.fastdfs.service.FastFileStorageClient;
 /**
  * FastDFS客户端组件。
  */
-public class FastDfsClient extends AbstractDfsClient {
+public class FastDfsClient implements DfsClient {
   @Autowired
   private FastFileStorageClient storageClient;
 
@@ -35,8 +35,9 @@ public class FastDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, File file) {
-    return upload(dir, file, new HashMap<String, String>());
+  @Deprecated
+  public String upload(String path, File file) {
+    return upload(path, file, new HashMap<String, String>());
   }
 
   @Override
@@ -45,7 +46,8 @@ public class FastDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, File file, Map<String, String> metadata) {
+  @Deprecated
+  public String upload(String path, File file, Map<String, String> metadata) {
     try (InputStream in = new FileInputStream(file)) {
       StorePath storePath = storageClient.uploadFile(in, file.length(),
           FilenameUtils.getExtension(file.getName()), toMataData(metadata));

@@ -19,12 +19,12 @@ import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
-import com.github.jnoee.xo.dfs.AbstractDfsClient;
+import com.github.jnoee.xo.dfs.DfsClient;
 import com.github.jnoee.xo.exception.SysException;
 import com.github.jnoee.xo.utils.CollectionUtils;
 import com.github.jnoee.xo.utils.StringUtils;
 
-public class OssDfsClient extends AbstractDfsClient {
+public class OssDfsClient implements DfsClient {
   @Autowired
   private OssProperties props;
   private OSSClient ossClient;
@@ -47,8 +47,8 @@ public class OssDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, File file) {
-    return upload(dir, file, null);
+  public String upload(String path, File file) {
+    return upload(path, file, null);
   }
 
   @Override
@@ -57,15 +57,9 @@ public class OssDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, File file, Map<String, String> metadataMap) {
-    String fileName = genUuidFileName(file.getName());
-    if (StringUtils.isNotBlank(dir)) {
-      fileName = dir + "/" + fileName;
-    }
-    ObjectMetadata metadata = null;
-    if (CollectionUtils.isNotEmpty(metadataMap)) {
-      metadata = map2metadata(metadataMap);
-    }
+  public String upload(String path, File file, Map<String, String> metadataMap) {
+    String fileName = genUploadFileName(path, file.getName());
+    ObjectMetadata metadata = map2metadata(metadataMap);
     ossClient.putObject(props.getDefaultBucketName(), fileName, file, metadata);
     return fileName;
   }
@@ -76,8 +70,8 @@ public class OssDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, MultipartFile file) {
-    return upload(dir, file, null);
+  public String upload(String path, MultipartFile file) {
+    return upload(path, file, null);
   }
 
   @Override
@@ -86,15 +80,9 @@ public class OssDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, MultipartFile file, Map<String, String> metadataMap) {
-    String fileName = genUuidFileName(file.getOriginalFilename());
-    if (StringUtils.isNotBlank(dir)) {
-      fileName = dir + "/" + fileName;
-    }
-    ObjectMetadata metadata = null;
-    if (CollectionUtils.isNotEmpty(metadataMap)) {
-      metadata = map2metadata(metadataMap);
-    }
+  public String upload(String path, MultipartFile file, Map<String, String> metadataMap) {
+    String fileName = genUploadFileName(path, file.getOriginalFilename());
+    ObjectMetadata metadata = map2metadata(metadataMap);
     try (InputStream in = file.getInputStream()) {
       ossClient.putObject(props.getDefaultBucketName(), fileName, in, metadata);
       return fileName;
@@ -129,6 +117,25 @@ public class OssDfsClient extends AbstractDfsClient {
   }
 
   /**
+   * 生成上传文件名。
+   * 
+   * @param path 文件路径
+   * @param origfileName 原文件名
+   * @return 返回上传文件名。
+   */
+  private String genUploadFileName(String path, String origfileName) {
+    String fileName = genUuidFileName(origfileName);
+    if (StringUtils.isNotBlank(path)) {
+      if (path.contains(".")) {
+        fileName = path;
+      } else {
+        fileName = path + "/" + fileName;
+      }
+    }
+    return fileName;
+  }
+
+  /**
    * 将Map元数据转换成ObjectMetadata对象。
    * 
    * @param metadata Map元数据
@@ -136,7 +143,9 @@ public class OssDfsClient extends AbstractDfsClient {
    */
   private ObjectMetadata map2metadata(Map<String, String> metadataMap) {
     ObjectMetadata metadata = new ObjectMetadata();
-    metadataMap.forEach(metadata::addUserMetadata);
+    if (CollectionUtils.isNotEmpty(metadataMap)) {
+      metadataMap.forEach(metadata::addUserMetadata);
+    }
     return metadata;
   }
 

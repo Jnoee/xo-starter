@@ -9,14 +9,14 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.github.jnoee.xo.dfs.AbstractDfsClient;
+import com.github.jnoee.xo.dfs.DfsClient;
 import com.github.jnoee.xo.exception.SysException;
 import com.github.jnoee.xo.utils.StringUtils;
 
 /**
  * 本地文件服务客户端组件。
  */
-public class LocalDfsClient extends AbstractDfsClient {
+public class LocalDfsClient implements DfsClient {
   @Autowired
   private LocalDfsProperties props;
 
@@ -26,8 +26,8 @@ public class LocalDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, File file) {
-    return upload(dir, file, new HashMap<String, String>());
+  public String upload(String path, File file) {
+    return upload(path, file, new HashMap<String, String>());
   }
 
   @Override
@@ -36,12 +36,9 @@ public class LocalDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, File file, Map<String, String> metadata) {
+  public String upload(String path, File file, Map<String, String> metadata) {
     try {
-      String fileName = genUuidFileName(file.getName());
-      if (StringUtils.isNotBlank(dir)) {
-        fileName = dir + File.separator + fileName;
-      }
+      String fileName = genUploadFileName(path, file.getName());
       File localFile = new File(getFilePath(fileName));
       FileUtils.copyFile(file, localFile);
       return fileName;
@@ -56,8 +53,8 @@ public class LocalDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, MultipartFile file) {
-    return upload(dir, file, new HashMap<String, String>());
+  public String upload(String path, MultipartFile file) {
+    return upload(path, file, new HashMap<String, String>());
   }
 
   @Override
@@ -66,12 +63,9 @@ public class LocalDfsClient extends AbstractDfsClient {
   }
 
   @Override
-  public String upload(String dir, MultipartFile file, Map<String, String> metadata) {
+  public String upload(String path, MultipartFile file, Map<String, String> metadata) {
     try {
-      String fileName = genUuidFileName(file.getOriginalFilename());
-      if (StringUtils.isNotBlank(dir)) {
-        fileName = dir + File.separator + fileName;
-      }
+      String fileName = genUploadFileName(path, file.getOriginalFilename());
       File localFile = new File(getFilePath(fileName));
       FileUtils.copyInputStreamToFile(file.getInputStream(), localFile);
       return fileName;
@@ -108,6 +102,25 @@ public class LocalDfsClient extends AbstractDfsClient {
   @Override
   public Map<String, String> getMetadata(String filePath) {
     return new HashMap<>();
+  }
+
+  /**
+   * 生成上传文件名。
+   * 
+   * @param path 文件路径
+   * @param origfileName 原文件名
+   * @return 返回上传文件名。
+   */
+  private String genUploadFileName(String path, String origfileName) {
+    String fileName = genUuidFileName(origfileName);
+    if (StringUtils.isNotBlank(path)) {
+      if (path.contains(".")) {
+        fileName = path;
+      } else {
+        fileName = path + File.separator + fileName;
+      }
+    }
+    return fileName;
   }
 
   /**

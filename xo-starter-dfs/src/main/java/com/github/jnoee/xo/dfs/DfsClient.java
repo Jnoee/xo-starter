@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.jnoee.xo.utils.FileUtils;
+
 /**
  * 分布式文件服务客户端接口。
  */
@@ -20,11 +22,11 @@ public interface DfsClient {
   /**
    * 上传文件。
    * 
-   * @param dir 文件目录
+   * @param path 文件路径
    * @param file 文件对象
    * @return 返回上传后的文件名。
    */
-  String upload(String dir, File file);
+  String upload(String path, File file);
 
   /**
    * 上传文件。
@@ -38,12 +40,12 @@ public interface DfsClient {
   /**
    * 上传文件。
    * 
-   * @param dir 文件目录
+   * @param path 文件路径
    * @param file 文件对象
    * @param metadataMap 文件元数据
    * @return 返回上传后的文件名。
    */
-  String upload(String dir, File file, Map<String, String> metadataMap);
+  String upload(String path, File file, Map<String, String> metadataMap);
 
   /**
    * 上传文件。
@@ -56,11 +58,11 @@ public interface DfsClient {
   /**
    * 上传文件。
    * 
-   * @param dir 文件目录
+   * @param path 文件路径
    * @param file 文件对象
    * @return 返回上传后的文件名。
    */
-  String upload(String dir, MultipartFile file);
+  String upload(String path, MultipartFile file);
 
   /**
    * 上传文件。
@@ -74,12 +76,12 @@ public interface DfsClient {
   /**
    * 上传文件。
    * 
-   * @param dir 文件目录
+   * @param path 文件路径
    * @param file 文件对象
    * @param metadataMap 文件元数据
    * @return 返回上传后的文件名。
    */
-  String upload(String dir, MultipartFile file, Map<String, String> metadataMap);
+  String upload(String path, MultipartFile file, Map<String, String> metadataMap);
 
   /**
    * 下载文件。
@@ -111,4 +113,14 @@ public interface DfsClient {
    * @return 返回文件元数据。
    */
   Map<String, String> getMetadata(String fileName);
+
+  /**
+   * 生成UUID文件名。
+   * 
+   * @param fileName 原文件名
+   * @return 返回生成的UUID文件名。
+   */
+  default String genUuidFileName(String fileName) {
+    return FileUtils.getUuidFileName(fileName).replaceAll("-", "");
+  }
 }

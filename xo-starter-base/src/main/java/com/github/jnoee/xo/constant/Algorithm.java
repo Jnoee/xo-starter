@@ -13,6 +13,7 @@ public class Algorithm {
   public static final String AES = "AES";
   public static final String DES = "DES";
   public static final String DH = "DH";
+  public static final String RSA = "RSA";
 
   /**
    * 私有构造方法。

@@ -1,6 +1,7 @@
 package com.github.jnoee.xo.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -285,6 +286,42 @@ public class CryptoUtils {
       return rsa.verify(decodeBase64(signature.getBytes()));
     } catch (Exception e) {
       throw new SysException("验证签名时发生异常", e);
+    }
+  }
+
+  /**
+   * RSA非对称加密。
+   * 
+   * @param content 待加密内容
+   * @param key 密钥
+   * @return 返回加密内容。
+   */
+  public static String rsaEncrypt(String content, Key key) {
+    try {
+      Cipher cipher = Cipher.getInstance(Algorithm.RSA);
+      cipher.init(Cipher.ENCRYPT_MODE, key);
+      byte[] encryptBytes = cipher.doFinal(content.getBytes(Encoding.UTF8));
+      return new String(encodeBase64(encryptBytes), Encoding.UTF8);
+    } catch (Exception e) {
+      throw new SysException("RSA加密时发生异常。", e);
+    }
+  }
+
+  /**
+   * RSA非对称解密。
+   * 
+   * @param content 待解密内容
+   * @param key 密钥
+   * @return 返回解密内容。
+   */
+  public static String rsaDecrypt(String content, Key key) {
+    try {
+      Cipher cipher = Cipher.getInstance(Algorithm.RSA);
+      cipher.init(Cipher.DECRYPT_MODE, key);
+      byte[] encryptBytes = decodeBase64(content.getBytes(Encoding.UTF8));
+      return new String(cipher.doFinal(encryptBytes), Encoding.UTF8);
+    } catch (Exception e) {
+      throw new SysException("RSA解密时发生异常。", e);
     }
   }
 
