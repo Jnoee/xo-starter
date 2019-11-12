@@ -9,7 +9,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 
 import com.github.jnoee.xo.ienum.IEnum;
-import com.github.jnoee.xo.ienum.utils.IEnumUtils;
+import com.github.jnoee.xo.ienum.IEnumManager;
 import com.github.jnoee.xo.jpa.usertype.AbstractUserType;
 
 /**
@@ -26,7 +26,7 @@ public class IEnumUserType extends AbstractUserType {
       if (value != null) {
         Field enumField = getField(rs, names[0], owner);
         Class<? extends IEnum> enumClass = (Class<? extends IEnum>) enumField.getType();
-        return IEnumUtils.getIEnumByValue(enumClass, value);
+        return IEnumManager.getIEnumByValue(enumClass, value);
       } else {
         return null;
       }

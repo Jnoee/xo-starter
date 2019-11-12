@@ -11,7 +11,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 
 import com.github.jnoee.xo.ienum.IEnum;
-import com.github.jnoee.xo.ienum.utils.IEnumUtils;
+import com.github.jnoee.xo.ienum.IEnumManager;
 import com.github.jnoee.xo.jpa.usertype.AbstractListUserType;
 import com.github.jnoee.xo.utils.BeanUtils;
 import com.github.jnoee.xo.utils.CollectionUtils;
@@ -33,7 +33,7 @@ public class IEnumListUserType extends AbstractListUserType {
             (Class<? extends IEnum>) BeanUtils.getGenericFieldType(field);
         List<IEnum> enums = new ArrayList<>();
         for (String enumValue : value.split(",")) {
-          enums.add(IEnumUtils.getIEnumByValue(enumClass, enumValue));
+          enums.add(IEnumManager.getIEnumByValue(enumClass, enumValue));
         }
         return enums;
       } else {

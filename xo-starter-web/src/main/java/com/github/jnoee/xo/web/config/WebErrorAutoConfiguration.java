@@ -23,7 +23,7 @@ public class WebErrorAutoConfiguration {
    * @return 返回ErrorAttributes组件。
    */
   @Bean
-  ErrorAttributes errorAttributes() {
+  ErrorAttributes webErrorAttributes() {
     return new WebErrorAttributes();
   }
 
@@ -33,7 +33,7 @@ public class WebErrorAutoConfiguration {
    * @return 返回异常处理组件。
    */
   @Bean
-  WebErrorController errorController() {
+  WebErrorController webErrorController() {
     return new WebErrorController();
   }
 

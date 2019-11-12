@@ -4,7 +4,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
 import com.github.jnoee.xo.ienum.IEnum;
-import com.github.jnoee.xo.ienum.utils.IEnumUtils;
+import com.github.jnoee.xo.ienum.IEnumManager;
+import com.github.jnoee.xo.utils.StringUtils;
 
 /**
  * 字符串转换IEnum组件。
@@ -39,10 +40,10 @@ public class StringToIEnum implements ConverterFactory<String, IEnum> {
      * @return 返回IEnum枚举对象。
      */
     public T convert(String source) {
-      if (source.length() == 0) {
+      if (StringUtils.isBlank(source)) {
         return null;
       }
-      return IEnumUtils.getIEnumByValue(toClass, source.trim());
+      return IEnumManager.getIEnumByValue(toClass, source.trim());
     }
   }
 }
