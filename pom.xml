@@ -72,6 +72,7 @@
 		<module>xo-starter-session-redis</module>
 		<module>xo-starter-session-redisson</module>
 		<module>xo-starter-dfs</module>
+		<module>xo-starter-district</module>
 		<module>xo-starter-swagger</module>
 		<module>xo-starter-web</module>
 		<module>xo-starter-xss</module>
