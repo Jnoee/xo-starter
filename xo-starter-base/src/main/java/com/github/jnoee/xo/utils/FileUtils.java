@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.UUID;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.github.jnoee.xo.constant.Measure;
 import com.github.jnoee.xo.exception.SysException;
 
@@ -103,6 +105,20 @@ public class FileUtils {
   }
 
   /**
+   * 新建文件对象，但不创建文件。
+   * 
+   * @param filePath 文件完整路径
+   * @return 返回File文件对象。
+   */
+  public static File newFile(String filePath) {
+    File fileDir = new File(getFullFileDir(filePath));
+    if (!fileDir.exists()) {
+      fileDir.mkdirs();
+    }
+    return new File(filePath);
+  }
+
+  /**
    * 根据文件的完整路径创建一个新文件。如果目录不存在时先创建目录再创建文件。
    * 
    * @param filePath 文件完整路径
@@ -110,12 +126,7 @@ public class FileUtils {
    */
   public static File createFile(String filePath) {
     try {
-      File fileDir = new File(getFullFileDir(filePath));
-      if (!fileDir.exists()) {
-        fileDir.mkdirs();
-      }
-
-      File file = new File(filePath);
+      File file = newFile(filePath);
       if (file.createNewFile()) {
         return file;
       } else {
@@ -124,6 +135,20 @@ public class FileUtils {
     } catch (IOException e) {
       throw new SysException("创建文件时发生错误。", e);
     }
+  }
+
+  /**
+   * 创建目录。
+   * 
+   * @param dirPath 目录路径
+   * @return 返回目录。
+   */
+  public static File createDir(String dirPath) {
+    File dir = new File(dirPath);
+    if (!dir.exists()) {
+      dir.mkdirs();
+    }
+    return dir;
   }
 
   /**
@@ -176,6 +201,75 @@ public class FileUtils {
     } catch (IOException e) {
       throw new SysException("从输入流复制到输出流时发生异常", e);
     }
+  }
+
+  /**
+   * 获取文件MD5码。
+   * 
+   * @param file 文件
+   * @return 返回文件MD5码。
+   */
+  public static String md5(File file) {
+    try (FileInputStream in = new FileInputStream(file)) {
+      return md5(in);
+    } catch (Exception e) {
+      throw new SysException("获取文件MD5码时发生异常。", e);
+    }
+  }
+
+  /**
+   * 获取输入流MD5码。
+   * 
+   * @param in 输入流
+   * @return 返回输入流MD5码。
+   */
+  public static String md5(InputStream in) {
+    try {
+      return DigestUtils.md5Hex(in);
+    } catch (Exception e) {
+      throw new SysException("获取文件MD5码时发生异常。", e);
+    }
+  }
+
+  /**
+   * 获取系统临时目录路径。
+   * 
+   * @return 返回系统临时目录路径。
+   */
+  public static String getTmpDir() {
+    return System.getProperty("java.io.tmpdir");
+  }
+
+  /**
+   * 创建一个随机的UUID临时目录。
+   * 
+   * @return 返回随机的UUID临时目录。
+   */
+  public static File createTmpUuidDir() {
+    String dirPath = getTmpDir() + File.separator + UUID.randomUUID();
+    return createDir(dirPath);
+  }
+
+  /**
+   * 创建一个随机的UUID临时文件。
+   * 
+   * @param fileType 文件类型
+   * @return 返回随机的UUID临时文件。
+   */
+  public static File createTmpUuidFile(String fileType) {
+    String fileName = getTmpDir() + File.separator + UUID.randomUUID() + "." + fileType;
+    return createFile(fileName);
+  }
+
+  /**
+   * 新建一个随机的UUID临时文件对象，但不创建文件。
+   * 
+   * @param fileType 文件类型
+   * @return 返回随机的UUID临时文件对象。
+   */
+  public static File newTmpUuidFile(String fileType) {
+    String fileName = getTmpDir() + File.separator + UUID.randomUUID() + "." + fileType;
+    return newFile(fileName);
   }
 
   /**

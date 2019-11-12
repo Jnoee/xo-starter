@@ -2,15 +2,19 @@ package com.github.jnoee.xo.model;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 日期区间查询条件模型。
  */
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = false)
+@ApiModel
 public class DateRangeQuery extends PageQuery {
   @ApiModelProperty(value = "起始日期")
   private Date startDate;
