@@ -7,13 +7,21 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.AliasFor;
 
 /**
- * 该组件用于触发自动生成Dao组件，该组件必须和 @see EntityScan 注解一起使用。
+ * 该注解可替换 @see EntityScan 扫描实体类，同时触发自动生成Dao组件。
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import(DaoRegistrar.class)
 public @interface DaoScan {
+  @AliasFor("basePackages")
+  String[] value() default {};
+
+  @AliasFor("value")
+  String[] basePackages() default {};
+
+  Class<?>[] basePackageClasses() default {};
 }

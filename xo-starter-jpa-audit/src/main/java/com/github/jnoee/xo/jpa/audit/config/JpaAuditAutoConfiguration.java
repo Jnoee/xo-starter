@@ -1,7 +1,6 @@
 package com.github.jnoee.xo.jpa.audit.config;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -18,8 +17,7 @@ import com.github.jnoee.xo.jpa.search.dao.FullTextDaoScan;
 @Configuration
 @AutoConfigureAfter(value = JpaAutoConfiguration.class)
 @EnableJpaAuditing
-@EntityScan("com.github.jnoee.xo.jpa.audit.entity")
-@FullTextDaoScan
+@FullTextDaoScan("com.github.jnoee.xo.jpa.audit.entity")
 public class JpaAuditAutoConfiguration {
   @Bean
   AuditorAware<AuthUser> auditorAware() {

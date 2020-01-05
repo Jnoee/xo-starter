@@ -3,7 +3,6 @@ package com.github.jnoee.xo.jpa.config;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -11,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.github.jnoee.xo.jpa.cache.EntityCacheManager;
 import com.github.jnoee.xo.jpa.cache.JpaCacheRegionFactoryPostProcessor;
+import com.github.jnoee.xo.jpa.dao.DaoScan;
 import com.github.jnoee.xo.jpa.dao.DaoUtils;
 import com.github.jnoee.xo.jpa.entity.IdEntityToString;
 import com.github.jnoee.xo.jpa.entity.StringToIdEntity;
@@ -19,7 +19,7 @@ import com.github.jnoee.xo.jpa.entity.UuidEntityToString;
 
 @Configuration
 @AutoConfigureAfter(value = JpaRepositoriesAutoConfiguration.class)
-@EntityScan({"com.github.jnoee.xo.jpa.converter", "com.github.jnoee.xo.jpa.usertype"})
+@DaoScan({"com.github.jnoee.xo.jpa.converter", "com.github.jnoee.xo.jpa.usertype"})
 public class JpaAutoConfiguration implements WebMvcConfigurer {
   @Bean
   EntityCacheManager entityCacheManager() {

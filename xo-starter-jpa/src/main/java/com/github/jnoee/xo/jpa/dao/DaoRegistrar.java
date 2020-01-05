@@ -1,11 +1,14 @@
 package com.github.jnoee.xo.jpa.dao;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 
 import org.springframework.beans.factory.annotation.AnnotatedGenericBeanDefinition;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.domain.EntityScanPackages;
 import org.springframework.core.type.AnnotationMetadata;
 
 import com.github.jnoee.xo.registrar.PackageScanRegistrar;
@@ -20,13 +23,33 @@ public class DaoRegistrar implements PackageScanRegistrar {
   @Override
   public void registerBeanDefinitions(AnnotationMetadata metadata,
       BeanDefinitionRegistry registry) {
-    for (Class<?> entityType : findClassesByAnnotationClass(metadata, EntityScan.class,
-        Entity.class)) {
+    EntityScanPackages.register(registry, getPackagesToScan(metadata));
+    for (Class<?> entityType : findEntityClasses(metadata)) {
       AnnotatedGenericBeanDefinition daoDefinition = genDaoDefinition(entityType);
       String daoBeanName = genDaoBeanName(entityType);
       registry.registerBeanDefinition(daoBeanName, daoDefinition);
       log.info("自动为实体 [{}] 生成Dao组件 [{}]。", entityType.getSimpleName(), daoBeanName);
     }
+  }
+
+  /**
+   * 获取扫描包。
+   * 
+   * @param metadata 注解元数据
+   * @return 返回包列表。
+   */
+  protected Set<String> getPackagesToScan(AnnotationMetadata metadata) {
+    return getPackagesToScan(metadata, DaoScan.class);
+  }
+
+  /**
+   * 查找实体类列表。
+   * 
+   * @param metadata 注解元数据
+   * @return 返回实体类列表。
+   */
+  protected List<Class<?>> findEntityClasses(AnnotationMetadata metadata) {
+    return findClassesByAnnotationClass(metadata, DaoScan.class, Entity.class);
   }
 
   /**
