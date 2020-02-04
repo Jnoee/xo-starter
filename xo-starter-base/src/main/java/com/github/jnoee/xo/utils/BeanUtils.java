@@ -227,6 +227,7 @@ public class BeanUtils {
   public static void copyFieldsExclude(Object source, Object target, String excludeFieldNames,
       String copyNullFieldNames) {
     List<String> excludeFields = stringToList(excludeFieldNames);
+    source = processHibernateLazyObject(source);
     String includeFieldNames = getDeclaredFields(source.getClass()).keySet().stream()
         .filter(k -> !excludeFields.contains(k)).collect(Collectors.joining(","));
     copyFieldsInclude(source, target, includeFieldNames, copyNullFieldNames);
