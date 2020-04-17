@@ -238,17 +238,67 @@ public class StringUtils {
    * 将固定格式的字符串转换成一个Map。
    * 
    * @param strs 字符串
+   * @param connector 连接符
+   * @param separator 分隔符
    * @return 返回一个Map。
    */
-  public static Map<String, String> stringToMap(String strs) {
+  public static Map<String, String> stringToMap(String strs, String connector, String separator) {
     Map<String, String> result = new LinkedHashMap<>();
-    if (isNotBlank(strs)) {
-      for (String value : strs.split(",")) {
-        String[] tmpStrs = value.split(":");
+    if (StringUtils.isNotBlank(strs)) {
+      for (String value : strs.split(separator)) {
+        String[] tmpStrs = value.split(connector);
         result.put(tmpStrs[0], tmpStrs[1]);
       }
     }
     return result;
+  }
+
+  /**
+   * 将固定格式的字符串转换成一个Map。
+   * 
+   * @param strs 字符串
+   * @param connector 连接符
+   * @return 返回一个Map。
+   */
+  public static Map<String, String> stringToMap(String strs, String connector) {
+    return stringToMap(strs, connector, ",");
+  }
+
+  /**
+   * 将固定格式的字符串转换成一个Map。
+   * 
+   * @param strs 字符串
+   * @return 返回一个Map。
+   */
+  public static Map<String, String> stringToMap(String strs) {
+    return stringToMap(strs, ":");
+  }
+
+  /**
+   * 将一个Map转换成固定格式的字符串。
+   * 
+   * @param map Map
+   * @param connector 连接符
+   * @param separator 分隔符
+   * @return 返回固定格式的字符串。
+   */
+  public static String mapToString(Map<String, String> map, String connector, String separator) {
+    List<String> result = new ArrayList<>();
+    for (Entry<String, String> entry : map.entrySet()) {
+      result.add(entry.getKey() + connector + entry.getValue());
+    }
+    return StringUtils.join(result, separator);
+  }
+
+  /**
+   * 将一个Map转换成固定格式的字符串。
+   * 
+   * @param map Map
+   * @param connector 连接符
+   * @return 返回固定格式的字符串。
+   */
+  public static String mapToString(Map<String, String> map, String connector) {
+    return mapToString(map, connector, ",");
   }
 
   /**
@@ -258,11 +308,7 @@ public class StringUtils {
    * @return 返回固定格式的字符串。
    */
   public static String mapToString(Map<String, String> map) {
-    List<String> result = new ArrayList<>();
-    for (Entry<String, String> entry : map.entrySet()) {
-      result.add(entry.getKey() + ":" + entry.getValue());
-    }
-    return join(result, ",");
+    return mapToString(map, ":");
   }
 
   /**
