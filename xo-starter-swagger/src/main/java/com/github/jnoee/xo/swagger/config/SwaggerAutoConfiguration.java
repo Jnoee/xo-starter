@@ -1,5 +1,6 @@
 package com.github.jnoee.xo.swagger.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,8 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 
+import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -48,7 +52,7 @@ public class SwaggerAutoConfiguration {
         .version(prop.getVersion()).build();
     apiDocket.apiInfo(apiInfo);
     setDocketSecurity(apiDocket, prop);
-    return apiDocket.select().apis(RequestHandlerSelectors.basePackage(prop.getBasePackage()))
+    return apiDocket.select().apis(scanBasePackage(prop.getBasePackage()))
         .paths(PathSelectors.any()).build();
   }
 
@@ -80,5 +84,20 @@ public class SwaggerAutoConfiguration {
     SecurityContext securityContext =
         SecurityContext.builder().securityReferences(securityReferences).build();
     apiDocket.securityContexts(Lists.newArrayList(securityContext));
+  }
+
+  /**
+   * 扫描包。
+   * 
+   * @param basePackage 包名
+   * @return 返回扫描包。
+   */
+  private Predicate<RequestHandler> scanBasePackage(String basePackage) {
+    List<Predicate<RequestHandler>> predicates = new ArrayList<>();
+    String[] controllerPack = basePackage.split(",");
+    for (String strBasePackage : controllerPack) {
+      predicates.add(RequestHandlerSelectors.basePackage(strBasePackage));
+    }
+    return Predicates.or(predicates);
   }
 }
