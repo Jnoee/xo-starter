@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
@@ -34,7 +35,8 @@ public class ErrorView implements View {
   public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response)
       throws Exception {
     WebRequest webRequest = new ServletWebRequest(request);
-    Map<String, Object> errorMap = errorAttributes.getErrorAttributes(webRequest, false);
+    Map<String, Object> errorMap =
+        errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.defaults());
     ErrorResponse error =
         new ErrorResponse(errorMap.get("code").toString(), errorMap.get("msg").toString());
     response.setHeader("Content-type", "text/html;charset=UTF-8");

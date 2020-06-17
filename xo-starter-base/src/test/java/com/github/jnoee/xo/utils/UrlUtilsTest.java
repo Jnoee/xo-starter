@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.jnoee.xo.constant.Encoding;
-import com.github.jnoee.xo.utils.UrlUtils;
 
 public class UrlUtilsTest {
   private String origString = "测试编码";

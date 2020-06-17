@@ -6,8 +6,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.jnoee.xo.utils.StringUtils;
-
 public class StringUtilsTest {
   private String origString = "com.github.jnoee:coo:base";
 
